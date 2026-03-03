@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCServices - Evaluación de Perfil</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React y Babel para procesar JSX -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: linear-gradient(135deg, #fdfbfb 0%, #f1f5f9 100%);
+            color: #004369;
+        }
+
+        .navy-text { color: #004369; }
+        .gold-text { color: #B8860B; }
+        
+        .card-premium {
+            background: #ffffff;
+            border: 1px solid rgba(0, 67, 105, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 67, 105, 0.15);
+        }
+
+        .input-elegant {
+            border-bottom: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .input-elegant:focus {
+            border-bottom-color: #004369;
+            background-color: rgba(0, 67, 105, 0.02);
+            padding-left: 4px;
+        }
+
+        .btn-principal {
+            background-color: #004369 !important;
+            color: #ffffff !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 67, 105, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 800;
+        }
+
+        .btn-principal:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px -5px rgba(0, 67, 105, 0.5);
+            filter: brightness(1.2);
+        }
+
+        .btn-principal:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .navy-bg {
+            background-color: #004369;
+        }
+
+        .animate-form { animation: slideUp 0.6s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const SUPABASE_URL = 'https://0ec90b57d6e95fcbda19832f.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJib2x0IiwicmVmIjoiMGVjOTBiNTdkNmU5NWZjYmRhMTk4MzJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODE1NzQsImV4cCI6MTc1ODg4MTU3NH0.9I8-U0x86Ak8t2DGaIk0HfvTSLsAyzdnz-Nw00mMkKw';
+
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const { useState, useEffect } = React;
+
+        function App() {
+            const [loading, setLoading] = useState(false);
+            const [submitted, setSubmitted] = useState(false);
+            const [formData, setFormData] = useState({
+                fullName: '', email: '', country: '', phone: '', service: '', appliedBefore: '', caseDescription: ''
+            });
+
+            useEffect(() => {
+                lucide.createIcons();
+            }, []);
+
+            useEffect(() => { lucide.createIcons(); }, [submitted]);
+
+            const handleChange = (e) => setFormData({...formData, [e.target.name]: e.target.value});
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                setLoading(true);
+                try {
+                    const { error } = await supabase
+                        .from('leads')
+                        .insert([{
+                            full_name: formData.fullName,
+                            email: formData.email,
+                            country: formData.country,
+                            phone: formData.phone,
+                            service: formData.service,
+                            applied_before: formData.appliedBefore,
+                            case_description: formData.caseDescription
+                        }]);
+
+                    if (error) throw error;
+                    setSubmitted(true);
+                } catch (err) {
+                    console.error('Error:', err);
+                    alert("Error al enviar. Por favor, intenta nuevamente.");
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            if (submitted) {
+                return (
+                    <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
+                        <div className="max-w-md w-full bg-white rounded-[2.5rem] card-premium p-10 text-center border-t-8 border-[#B8860B] animate-form">
+                            <div className="mb-6 flex justify-center bg-green-50 w-20 h-20 rounded-full items-center mx-auto text-green-600">
+                                <i data-lucide="check" className="w-10 h-10"></i>
+                            </div>
+                            <h2 className="text-2xl font-extrabold mb-4 navy-text">¡Solicitud Enviada!</h2>
+                            <p className="text-slate-600 mb-8 leading-relaxed">
+                                Gracias <strong>{formData.fullName.split(' ')[0]}</strong> por confiar en nosotros. Nos contactaremos pronto.
+                            </p>
+                            <button onClick={() => window.location.reload()} className="w-full py-5 rounded-2xl font-bold btn-principal">Volver</button>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="min-h-screen pb-20">
+                    <header className="pt-12 pb-10 px-6 mb-8 flex flex-col items-center bg-white shadow-sm rounded-b-[3.5rem] border-b border-sky-50">
+                        <div className="flex flex-col items-center mb-4">
+                            {/* Icono (Imagen que ya te funciona) */}
+                            <img 
+                                src="https://i.postimg.cc/85fmmNgY/LOGO-CCSERVICES.jpg" 
+                                alt="Icono CCServices" 
+                                className="w-24 h-24 object-contain mb-2"
+                            />
+                            
+                            {/* Nombre de la marca reconstruido en texto para máxima nitidez */}
+                            <div className="flex flex-col items-center leading-none">
+                                <div className="text-4xl font-black italic tracking-tighter">
+                                    <span className="navy-text">CC</span>
+                                    <span className="gold-text">Services</span>
+                                </div>
+                                <div className="text-[9px] font-bold uppercase tracking-[0.5em] navy-text mt-1 opacity-80">
+                                    Asesoría Migratoria
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p className="gold-text font-bold italic text-lg leading-tight text-center max-w-xs mt-4">
+                            "Sueños sin fronteras, decisiones informadas."
+                        </p>
+                    </header>
+
+                    <main className="max-w-md mx-auto px-6 animate-form">
+                        <div className="mb-10 text-center bg-white p-6 rounded-[2rem] shadow-sm border border-slate-50">
+                            <h2 className="text-2xl font-extrabold navy-text tracking-tight mb-1">Evaluación de Perfil</h2>
+                            <p className="text-slate-400 text-sm font-medium italic">Acompañamiento Personalizado</p>
+                        </div>
+
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
+                                <label className="text-[10px] font-extrabold uppercase tracking-widest navy-text mb-1 block opacity-50">Nombre Completo</label>
+                                <input required name="fullName" onChange={handleChange} className="w-full p-2 text-lg outline-none input-elegant" placeholder="María García" />
+                            </div>
+
+                            <div className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
+                                <label className="text-[10px] font-extrabold uppercase tracking-widest navy-text mb-1 block opacity-50">Correo Electrónico</label>
+                                <input required type="email" name="email" onChange={handleChange} className="w-full p-2 text-lg outline-none input-elegant" placeholder="nombre@ejemplo.com" />
+                            </div>
+
+                            <div className="flex gap-4">
+                                <div className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 flex-1">
+                                    <label className="text-[10px] font-extrabold uppercase tracking-widest navy-text mb-1 block opacity-50">País</label>
+                                    <input required name="country" onChange={handleChange} className="w-full p-2 text-lg outline-none input-elegant" placeholder="Residencia" />
+                                </div>
+                                <div className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 flex-1">
+                                    <label className="text-[10px] font-extrabold uppercase tracking-widest navy-text mb-1 block opacity-50">WhatsApp</label>
+                                    <input required name="phone" onChange={handleChange} className="w-full p-2 text-lg outline-none input-elegant" placeholder="+00 000..." />
+                                </div>
+                            </div>
+
+                            <div className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
+                                <label className="text-[10px] font-extrabold uppercase tracking-widest navy-text mb-1 block opacity-50">Trámite de Interés</label>
+                                <input required name="service" onChange={handleChange} className="w-full p-2 text-lg outline-none input-elegant" placeholder="¿Qué proceso buscas?" />
+                            </div>
+
+                            <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                                <label className="text-[10px] font-extrabold uppercase tracking-widest navy-text mb-5 block text-center opacity-70">¿Has aplicado anteriormente?</label>
+                                <div className="flex gap-4">
+                                    <label className={`flex-1 flex items-center justify-center py-4 border-2 rounded-2xl cursor-pointer transition-all font-bold text-sm ${formData.appliedBefore === 'si' ? 'navy-bg text-white border-transparent shadow-md' : 'border-slate-100 text-slate-400 bg-slate-50'}`}>
+                                        <input type="radio" name="appliedBefore" value="si" onChange={handleChange} className="hidden" /> SÍ
+                                    </label>
+                                    <label className={`flex-1 flex items-center justify-center py-4 border-2 rounded-2xl cursor-pointer transition-all font-bold text-sm ${formData.appliedBefore === 'no' ? 'navy-bg text-white border-transparent shadow-md' : 'border-slate-100 text-slate-400 bg-slate-50'}`}>
+                                        <input type="radio" name="appliedBefore" value="no" onChange={handleChange} className="hidden" /> NO
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
+                                <label className="text-[10px] font-extrabold uppercase tracking-widest navy-text mb-3 block flex items-center gap-2">
+                                    <i data-lucide="heart" className="w-4 h-4 text-rose-400"></i> Cuéntame sobre tu caso
+                                </label>
+                                <textarea required name="caseDescription" onChange={handleChange} rows="4" className="w-full p-4 outline-none resize-none bg-slate-50 rounded-2xl focus:bg-white text-sm" placeholder="Detalles relevantes..."></textarea>
+                            </div>
+
+                            <button type="submit" disabled={loading} className="w-full py-6 rounded-[2rem] btn-principal flex items-center justify-center gap-4 text-xl mt-6">
+                                {loading ? <span className="w-7 h-7 border-4 border-white border-t-transparent rounded-full animate-spin"></span> : "ENVIAR MI CASO"}
+                            </button>
+                        </form>
+                    </main>
+                    <footer className="text-center mt-20 px-6 opacity-40 text-[10px] font-extrabold uppercase tracking-[0.4em] navy-text">
+                        CCServices · más cerca de tus sueños
+                    </footer>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
