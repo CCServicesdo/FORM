@@ -1,73 +1,736 @@
-# React + TypeScript + Vite
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CCServices - Evaluación de Perfil</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+    :root {
+      --navy:      #0E4A74;
+      --navy-dark: #092f4a;
+      --navy-mid:  #1a5f8e;
+      --gold:      #C98A00;
+      --gold-lt:   #e8a800;
+      --sky:       #A9DDE1;
+      --sky-lt:    #d6f0f2;
+      --white:     #ffffff;
+      --gray-lt:   #f5f7fa;
+      --gray-mid:  #e2e8f0;
+      --gray-text: #4a5568;
+      --error:     #c53030;
+    }
 
-Currently, two official plugins are available:
+    html { scroll-behavior: smooth; }
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--gray-lt);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-## React Compiler
+    /* ── HEADER ── */
+    header {
+      width: 100%;
+      background: var(--navy-dark);
+      padding: 20px 24px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+    .logo-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
 
-## Expanding the ESLint configuration
+    .logo-icon {
+      width: 160px;
+      height: 160px;
+    }
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.1;
+    }
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+    .logo-text .brand {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+    .logo-text .brand span.cc { color: var(--white); }
+    .logo-text .brand span.sv { color: var(--gold); }
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+    .logo-text .tagline-sub {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      color: var(--sky);
+      text-transform: uppercase;
+    }
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+    .header-quote {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.2px;
+    }
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+    /* ── HERO BAND ── */
+    .hero {
+      width: 100%;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      padding: 36px 24px 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(201,138,0,0.08);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -30px;
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: rgba(169,221,225,0.07);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(201,138,0,0.18);
+      border: 1px solid rgba(201,138,0,0.4);
+      color: var(--gold-lt);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold-lt);
+    }
+
+    .hero p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.72);
+      max-width: 340px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .trust-pills {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .pill {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .pill svg { flex-shrink: 0; }
+
+    /* ── FORM CARD ── */
+    .form-wrapper {
+      width: 100%;
+      max-width: 560px;
+      padding: 20px 16px 32px;
+    }
+
+    .form-card {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(14,74,116,0.10);
+      overflow: hidden;
+    }
+
+    .form-card-header {
+      background: linear-gradient(90deg, var(--navy) 0%, var(--navy-mid) 100%);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .step-dot {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 800; color: var(--white);
+      flex-shrink: 0;
+    }
+
+    .form-card-header h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.3;
+    }
+
+    .form-card-header p {
+      font-size: 11px;
+      color: rgba(255,255,255,0.65);
+      margin-top: 2px;
+    }
+
+    .form-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* ── FIELDS ── */
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .field label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+
+    .field label .req { color: var(--gold); margin-left: 2px; }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--gray-mid);
+      border-radius: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      color: #1a202c;
+      background: var(--white);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder { color: #a0aec0; }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(14,74,116,0.10);
+    }
+
+    .field input.error,
+    .field select.error,
+    .field textarea.error {
+      border-color: var(--error);
+    }
+
+    .field .error-msg {
+      font-size: 11px;
+      color: var(--error);
+      font-weight: 500;
+    }
+
+    /* select arrow */
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '';
+      position: absolute;
+      right: 14px; top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid var(--navy);
+      pointer-events: none;
+    }
+    .select-wrap select { padding-right: 36px; cursor: pointer; }
+
+    /* radio toggle */
+    .radio-group {
+      display: flex;
+      gap: 0;
+      border: 1.5px solid var(--gray-mid);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .radio-group label {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-text);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      text-transform: none;
+      letter-spacing: 0;
+      border: none;
+    }
+
+    .radio-group label:first-child { border-right: 1px solid var(--gray-mid); }
+
+    .radio-group input[type="radio"] { display: none; }
+
+    .radio-group input[type="radio"]:checked + span {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .radio-group label:has(input:checked) {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+    /* ── SUBMIT ── */
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--gold) 0%, #a87000 100%);
+      border: none;
+      border-radius: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(201,138,0,0.40);
+    }
+
+    .submit-btn:active:not(:disabled) { transform: translateY(0); }
+    .submit-btn:disabled { opacity: 0.65; cursor: not-allowed; }
+
+    .submit-btn .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    .submit-btn.loading .spinner { display: block; }
+    .submit-btn.loading .btn-text { opacity: 0.8; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── PRIVACY NOTE ── */
+    .privacy-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 12px 14px;
+      background: var(--sky-lt);
+      border-left: 3px solid var(--sky);
+      border-radius: 6px;
+      font-size: 11px;
+      color: var(--navy-dark);
+      line-height: 1.5;
+    }
+
+    .privacy-note svg { flex-shrink: 0; margin-top: 1px; }
+
+    /* ── SUCCESS STATE ── */
+    .success-card {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 40px 24px;
+      gap: 16px;
+    }
+
+    .success-card.show { display: flex; }
+
+    .success-icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0E4A74 0%, #1a5f8e 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .success-card h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .success-card p {
+      font-size: 13px;
+      color: var(--gray-text);
+      line-height: 1.6;
+      max-width: 280px;
+    }
+
+    .success-card .gold-text {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .wa-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #25D366;
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      margin-top: 4px;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .wa-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(37,211,102,0.40);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 20px 24px;
+      text-align: center;
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+
+    footer span { color: var(--gold); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 420px) {
+      .hero h1 { font-size: 22px; }
+      .form-body { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-row">
+    <img
+      src="https://i.postimg.cc/85fmmNgY/LOGO-CCSERVICES.jpg"
+      alt="CCServices Logo"
+      class="logo-icon"
+      style="border-radius: 12px; object-fit: contain; background: white; padding: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.25);"
+    />
+    <div class="logo-text">
+      <div class="brand"><span class="cc">CC</span><span class="sv">Services</span></div>
+      <div class="tagline-sub">Acompañamiento Migratorio</div>
+    </div>
+  </div>
+  <div class="header-quote">"Sueños sin fronteras, decisiones informadas."</div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">✦ Paso 1 de tu proceso</div>
+  <h1>Evaluación de <em>Perfil Migratorio</em></h1>
+  <p>Cuéntanos tu caso y te orientamos sobre el camino más claro para tu situación.</p>
+  <div class="trust-pills">
+    <div class="pill">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1L10.2 5.5L15 6.3L11.5 9.7L12.4 14.5L8 12.1L3.6 14.5L4.5 9.7L1 6.3L5.8 5.5L8 1Z" fill="#C98A00"/></svg>
+      30+ casos reales
+    </div>
+    <div class="pill">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm3 6H9V5a1 1 0 10-2 0v3a1 1 0 001 1h3a1 1 0 100-2z" fill="#A9DDE1"/></svg>
+      Respuesta en 24h
+    </div>
+    <div class="pill">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M13 2H3a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1V3a1 1 0 00-1-1zm-1 8H4V6h8v4zm0-6H4V4h8v1z" fill="#A9DDE1"/></svg>
+      100% virtual
+    </div>
+  </div>
+</div>
+
+<!-- FORM WRAPPER -->
+<div class="form-wrapper">
+  <div class="form-card">
+    <div class="form-card-header">
+      <div class="step-dot">1</div>
+      <div>
+        <h2>Evaluación de Perfil</h2>
+        <p>Toda la información es confidencial y segura</p>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <form id="evalForm" class="form-body" novalidate>
+
+      <div class="field">
+        <label for="nombre">Nombre Completo <span class="req">*</span></label>
+        <input type="text" id="nombre" name="nombre" placeholder="Ej: María García López" autocomplete="name" />
+        <span class="error-msg" id="err-nombre"></span>
+      </div>
+
+      <div class="field">
+        <label for="email">Correo Electrónico <span class="req">*</span></label>
+        <input type="email" id="email" name="email" placeholder="tucorreo@email.com" autocomplete="email" />
+        <span class="error-msg" id="err-email"></span>
+      </div>
+
+      <div class="field">
+        <label for="pais">País de Residencia Actual <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="pais" name="pais">
+            <option value="">Selecciona tu país</option>
+            <option>República Dominicana</option>
+            <option>Estados Unidos</option>
+            <option>México</option>
+            <option>Colombia</option>
+            <option>Venezuela</option>
+            <option>Honduras</option>
+            <option>Guatemala</option>
+            <option>El Salvador</option>
+            <option>Ecuador</option>
+            <option>Perú</option>
+            <option>Cuba</option>
+            <option>Haití</option>
+            <option>Puerto Rico</option>
+            <option>Canadá</option>
+            <option>España</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <span class="error-msg" id="err-pais"></span>
+      </div>
+
+      <div class="field">
+        <label for="whatsapp">WhatsApp <span class="req">*</span></label>
+        <input type="tel" id="whatsapp" name="whatsapp" placeholder="+1 809 000 0000" autocomplete="tel" />
+        <span class="error-msg" id="err-whatsapp"></span>
+      </div>
+
+      <div class="field">
+        <label for="tramite">Trámite de Interés <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="tramite" name="tramite">
+            <option value="">Selecciona un trámite</option>
+            <option>Visa B1/B2 — Turismo / Negocios (EE.UU.)</option>
+            <option>Visa de Prometid@ K1 (EE.UU.)</option>
+            <option>Visa de Estudiante F-1 / M-1 (EE.UU.)</option>
+            <option>Ajuste de Estatus I-485 (EE.UU.)</option>
+            <option>Petición Familiar I-130 (EE.UU.)</option>
+            <option>Autorización de Empleo I-765 (EE.UU.)</option>
+            <option>Visitor Visa TRV (Canadá)</option>
+            <option>Visa Schengen (Europa)</option>
+            <option>Traducción y Apostilla</option>
+            <option>Otro / No sé aún</option>
+          </select>
+        </div>
+        <span class="error-msg" id="err-tramite"></span>
+      </div>
+
+      <div class="field">
+        <label>¿Has aplicado anteriormente? <span class="req">*</span></label>
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="aplicado" value="Sí" />
+            <span>Sí</span>
+          </label>
+          <label>
+            <input type="radio" name="aplicado" value="No" />
+            <span>No</span>
+          </label>
+        </div>
+        <span class="error-msg" id="err-aplicado"></span>
+      </div>
+
+      <div class="field">
+        <label for="caso">Cuéntame sobre tu caso <span class="req">*</span></label>
+        <textarea id="caso" name="caso" placeholder="Describe brevemente tu situación migratoria, qué quieres lograr y cualquier detalle que consideres importante..."></textarea>
+        <span class="error-msg" id="err-caso"></span>
+      </div>
+
+      <div class="privacy-note">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1L2 4v4c0 3.3 2.5 6.4 6 7.2C12.5 14.4 15 11.3 15 8V4L8 1z" fill="#0E4A74" opacity="0.7"/></svg>
+        Tu información es confidencial. Nunca la compartimos con terceros sin tu autorización expresa.
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <div class="spinner"></div>
+        <span class="btn-text">✈ Enviar Mi Caso</span>
+      </button>
+
+    </form>
+
+    <!-- SUCCESS -->
+    <div class="success-card" id="successCard">
+      <div class="success-icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3>¡Caso recibido!</h3>
+      <p>Gracias por tu confianza. Reina revisará tu evaluación y te contactará <span class="gold-text">dentro de las próximas 24 horas</span> por WhatsApp.</p>
+      <a href="https://wa.me/18494838970" target="_blank" class="wa-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.2-.5 0-.2-.7-1.6-1-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.3C6 8.5 5 9.5 5 11.4s1.3 3.8 1.5 4.1c.2.3 2.6 4 6.3 5.6.9.4 1.6.6 2.1.7.9.3 1.7.2 2.3.1.7-.1 2.2-.9 2.5-1.8.3-.9.3-1.6.2-1.8-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.4 5.3L2 22l4.8-1.3C8.3 21.5 10.1 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.7 0-3.4-.5-4.8-1.4l-.3-.2-3.2.8.9-3.1-.2-.3C3.5 14.6 3 13.3 3 12 3 7.1 7.1 3 12 3s9 4.1 9 9-4.1 8.3-9 8.3z"/></svg>
+        Escríbenos por WhatsApp
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<footer>CCServices · <span>más cerca de tus sueños</span></footer>
+
+<script>
+  // ─── REEMPLAZA ESTA URL CON LA DE TU GOOGLE APPS SCRIPT ───
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx13E5YljdUMyxv38AXkRPtJUPXInFlW9mlvXLnQOTrY3DJXPc4bEGsqORd2sfNAJoQfA/exec";
+  // ──────────────────────────────────────────────────────────
+
+  const form = document.getElementById('evalForm');
+  const btn  = document.getElementById('submitBtn');
+  const successCard = document.getElementById('successCard');
+
+  function getVal(id) {
+    return document.getElementById(id)?.value.trim() ?? '';
+  }
+
+  function getRadio(name) {
+    return document.querySelector(`input[name="${name}"]:checked`)?.value ?? '';
+  }
+
+  function setError(fieldId, msg) {
+    const el = document.getElementById('err-' + fieldId);
+    const input = document.getElementById(fieldId) || document.querySelector(`[name="${fieldId}"]`);
+    if (el) el.textContent = msg;
+    if (input) {
+      if (msg) input.classList.add('error');
+      else input.classList.remove('error');
+    }
+  }
+
+  function clearErrors() {
+    ['nombre','email','pais','whatsapp','tramite','aplicado','caso'].forEach(f => setError(f, ''));
+  }
+
+  function validate() {
+    let ok = true;
+    clearErrors();
+
+    if (!getVal('nombre')) { setError('nombre', 'Este campo es requerido.'); ok = false; }
+    const em = getVal('email');
+    if (!em) { setError('email', 'Este campo es requerido.'); ok = false; }
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { setError('email', 'Ingresa un correo válido.'); ok = false; }
+    if (!getVal('pais')) { setError('pais', 'Selecciona tu país.'); ok = false; }
+    if (!getVal('whatsapp')) { setError('whatsapp', 'Este campo es requerido.'); ok = false; }
+    if (!getVal('tramite')) { setError('tramite', 'Selecciona un trámite.'); ok = false; }
+    if (!getRadio('aplicado')) { setError('aplicado', 'Selecciona una opción.'); ok = false; }
+    if (!getVal('caso')) { setError('caso', 'Por favor cuéntanos sobre tu caso.'); ok = false; }
+
+    return ok;
+  }
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    if (!validate()) return;
+
+    btn.disabled = true;
+    btn.classList.add('loading');
+    btn.querySelector('.btn-text').textContent = 'Enviando...';
+
+    const payload = {
+      nombre:    getVal('nombre'),
+      email:     getVal('email'),
+      pais:      getVal('pais'),
+      whatsapp:  getVal('whatsapp'),
+      tramite:   getVal('tramite'),
+      aplicado:  getRadio('aplicado'),
+      caso:      getVal('caso'),
+      fecha:     new Date().toLocaleString('es-DO')
+    };
+
+    try {
+      await fetch(WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      // no-cors always resolves — show success
+      form.style.display = 'none';
+      successCard.classList.add('show');
+
+    } catch (err) {
+      btn.disabled = false;
+      btn.classList.remove('loading');
+      btn.querySelector('.btn-text').textContent = '✈ Enviar Mi Caso';
+      alert('Ocurrió un error al enviar. Por favor escríbenos directamente por WhatsApp: +1 (849) 483-8970');
+    }
+  });
+</script>
+
+</body>
+</html>
