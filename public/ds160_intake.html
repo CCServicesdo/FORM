@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DS-160 Intake — CCServices</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal:      #2BBFBF;
+      --teal-dark: #1a9494;
+      --teal-lt:   #e0f7f7;
+      --teal-mid:  #3DCFCF;
+      --navy:      #1B4F7E;
+      --navy-dark: #133A5E;
+      --gold:      #C4871A;
+      --white:     #FFFFFF;
+      --gray:      #f0fafa;
+      --border:    #b2e8e8;
+      --text:      #0d3d3d;
+      --muted:     #4a8080;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+      background: var(--gray);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 60%, var(--teal-mid) 100%);
+      color: var(--white);
+      padding: 22px 32px 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border-bottom: 4px solid var(--gold);
+    }
+    .logo-wrap {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,.2);
+    }
+    .logo-wrap img {
+      height: 64px;
+      width: auto;
+      display: block;
+      border-radius: 6px;
+    }
+    .header-text h1 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: .5px;
+    }
+    .header-text p {
+      font-size: .78rem;
+      opacity: .9;
+      margin-top: 3px;
+    }
+    .flag-bar {
+      margin-left: auto;
+      font-size: 1.7rem;
+      letter-spacing: 6px;
+    }
+    /* ── Container ── */
+    .container {
+      max-width: 900px;
+      margin: 28px auto;
+      padding: 0 16px 48px;
+    }
+    /* ── Notice ── */
+    .notice {
+      background: #fff8e6;
+      border-left: 4px solid var(--gold);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      font-size: .82rem;
+      color: #5a3e00;
+    }
+    .notice strong { color: var(--gold); }
+    /* ── Progress ── */
+    .progress-wrap {
+      background: var(--border);
+      border-radius: 99px;
+      height: 6px;
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 6px;
+      background: linear-gradient(90deg, var(--teal), var(--gold));
+      border-radius: 99px;
+      transition: width .4s;
+      width: 0%;
+    }
+    .progress-label {
+      font-size: .72rem;
+      color: var(--muted);
+      text-align: right;
+      margin-bottom: 18px;
+    }
+    /* ── Section ── */
+    .section {
+      background: var(--white);
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(43,191,191,.10);
+      margin-bottom: 24px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .section-header {
+      background: linear-gradient(90deg, var(--teal-dark), var(--teal));
+      color: var(--white);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-header .icon { font-size: 1.2rem; }
+    .section-header h2 {
+      font-size: .95rem;
+      font-weight: 700;
+      letter-spacing: .3px;
+    }
+    .section-header h2 small {
+      font-weight: 400;
+      opacity: .85;
+      font-size: .78rem;
+      display: block;
+      margin-top: 1px;
+    }
+    .section-body { padding: 22px 24px; }
+    /* ── Fields ── */
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .field label {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--teal-dark);
+    }
+    .field label .en {
+      font-weight: 400;
+      color: var(--muted);
+      display: block;
+      margin-top: 1px;
+    }
+    .field input[type="text"],
+    .field input[type="email"],
+    .field input[type="tel"],
+    .field input[type="date"],
+    .field input[type="number"],
+    .field select,
+    .field textarea {
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 13px;
+      font-family: inherit;
+      font-size: .85rem;
+      color: var(--text);
+      background: #f5fefe;
+      transition: border-color .2s, box-shadow .2s;
+      width: 100%;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(43,191,191,.18);
+      background: #fff;
+    }
+    .field textarea { min-height: 80px; resize: vertical; }
+    .req { color: var(--gold); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    @media(max-width:640px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .header { flex-wrap: wrap; }
+      .flag-bar { margin-left: 0; }
+    }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
+    .subsection-title {
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--teal-dark);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      margin-bottom: 14px;
+      border-left: 3px solid var(--teal);
+      padding-left: 10px;
+    }
+    /* ── Yes/No rows ── */
+    .yn-row {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-bottom: 16px;
+    }
+    .yn-question {
+      flex: 1;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .yn-question .en { font-weight: 400; color: var(--muted); font-size: .77rem; }
+    .yn-btns { display: flex; gap: 14px; flex-shrink: 0; }
+    .yn-btns label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .82rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .yn-btns input[type="radio"] { accent-color: var(--teal); }
+    .check-group label {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      font-size: .82rem;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      line-height: 1.45;
+    }
+    .check-group label:last-child { border-bottom: none; }
+    .check-group input[type="checkbox"] { accent-color: var(--teal); margin-top: 2px; flex-shrink: 0; }
+    /* ── Security questions ── */
+    .sec-q {
+      background: var(--teal-lt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+    }
+    .sec-q .q-text {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+    .sec-q .q-text .en { font-weight: 400; color: var(--muted); display: block; }
+    /* ── Signature ── */
+    .signature-block {
+      background: var(--teal-lt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin-bottom: 20px;
+      font-size: .81rem;
+      line-height: 1.65;
+    }
+    .signature-block p { margin-bottom: 8px; }
+    .confirm-check {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: .82rem;
+      line-height: 1.5;
+    }
+    .confirm-check input { margin-top: 3px; accent-color: var(--teal); flex-shrink: 0; }
+    /* ── Submit ── */
+    .btn-submit {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(90deg, var(--teal-dark), var(--teal));
+      color: var(--white);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      letter-spacing: .5px;
+      transition: opacity .2s, transform .1s, box-shadow .2s;
+      margin-top: 22px;
+      box-shadow: 0 4px 14px rgba(43,191,191,.35);
+    }
+    .btn-submit:hover { opacity: .9; box-shadow: 0 6px 20px rgba(43,191,191,.45); }
+    .btn-submit:active { transform: scale(.99); }
+    .btn-submit:disabled { opacity: .6; cursor: not-allowed; }
+    /* ── Success ── */
+    #success {
+      display: none;
+      text-align: center;
+      background: var(--white);
+      border-radius: 14px;
+      padding: 52px 32px;
+      border: 2px solid var(--teal);
+      margin-bottom: 32px;
+    }
+    #success .check-icon { font-size: 3.5rem; margin-bottom: 16px; }
+    #success h2 { color: var(--teal-dark); font-size: 1.4rem; margin-bottom: 12px; }
+    #success p { color: var(--muted); font-size: .9rem; line-height: 1.65; margin-bottom: 8px; }
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      font-size: .74rem;
+      color: var(--muted);
+      padding: 20px 0 0;
+      border-top: 1px solid var(--border);
+      margin-top: 8px;
+    }
+    .conditional { display: none; }
+    .conditional.show { display: block; }
+  </style>
+</head>
+<body>
+<div class="header">
+  <div class="logo-wrap">
+    <img src="https://i.postimg.cc/85fmmNgY/LOGO-CCSERVICES.jpg" alt="CCServices Logo" />
+  </div>
+  <div class="header-text">
+    <h1>CCServices — Formulario DS-160</h1>
+    <p>Recopilación de información para Visa No Inmigrante EE.UU. / U.S. Nonimmigrant Visa Information</p>
+  </div>
+  <div class="flag-bar">🇩🇴🇺🇸</div>
+</div>
+<div class="container">
+  <div class="notice">
+    <strong>⚠️ Importante:</strong> Esta información es confidencial y será utilizada exclusivamente para tramitar su solicitud de visa B1/B2. Proporcione datos exactamente como aparecen en su pasaporte.
+    <br><em>This information is confidential and will be used solely to process your DS-160 visa application.</em>
+  </div>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+  <div class="progress-label" id="progressLabel">0% completado / completed</div>
+  <div id="success">
+    <div class="check-icon">✅</div>
+    <h2>¡Información enviada! / Information Submitted!</h2>
+    <p>Gracias. CCServices revisará su información y se pondrá en contacto para continuar con el proceso de su visa DS-160.</p>
+    <p><em>Thank you. CCServices will review your information and contact you shortly.</em></p>
+  </div>
+  <form id="ds160Form" novalidate>
+    <!-- 1. INFORMACIÓN PERSONAL -->
+    <div class="section">
+      <div class="section-header"><span class="icon">👤</span><h2>1. Información Personal <small>/ Personal Information</small></h2></div>
+      <div class="section-body">
+        <div class="grid-2">
+          <div class="field"><label>Apellidos <span class="req">*</span><span class="en">Surnames (as in passport)</span></label><input type="text" name="apellidos" placeholder="Como aparece en pasaporte" required /></div>
+          <div class="field"><label>Nombres <span class="req">*</span><span class="en">Given Names (as in passport)</span></label><input type="text" name="nombres" placeholder="Como aparece en pasaporte" required /></div>
+        </div>
+        <div class="yn-row">
+          <div class="yn-question">¿Ha utilizado algún otro nombre?<span class="en">Have you used any other names?</span></div>
+          <div class="yn-btns"><label><input type="radio" name="otro_nombre" value="no" required /> No</label><label><input type="radio" name="otro_nombre" value="si" /> Sí/Yes</label></div>
+        </div>
+        <div class="conditional" id="div_otro_nombre">
+          <div class="grid-2">
+            <div class="field"><label>Otro apellido<span class="en">Other surname</span></label><input type="text" name="otro_apellido" /></div>
+            <div class="field"><label>Otro nombre<span class="en">Other given name</span></label><input type="text" name="otro_nombre_val" /></div>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="field"><label>Sexo <span class="req">*</span><span class="en">Sex</span></label><select name="sexo" required><option value="">Seleccione</option><option value="M">Masculino / Male</option><option value="F">Femenino / Female</option></select></div>
+          <div class="field"><label>Estado Civil <span class="req">*</span><span class="en">Marital Status</span></label><select name="estado_civil" id="estado_civil" required><option value="">Seleccione</option><option value="soltero">Soltero/a</option><option value="casado">Casado/a</option><option value="union_libre">Unión Libre</option><option value="divorciado">Divorciado/a</option><option value="viudo">Viudo/a</option><option value="separado">Separado/a</option></select></div>
+          <div class="field"><label>Fecha de Nacimiento <span class="req">*</span><span class="en">Date of Birth</span></label><input type="date" name="fecha_nacimiento" required /></div>
+        </div>
+        <div class="grid-3">
+          <div class="field"><label>Ciudad de Nacimiento <span class="req">*</span><span class="en">City of Birth</span></label><input type="text" name="ciudad_nacimiento" required /></div>
+          <div class="field"><label>Estado/Provincia de Nacimiento<span class="en">State/Province of Birth</span></label><input type="text" name="estado_nacimiento" /></div>
+          <div class="field"><label>País de Nacimiento <span class="req">*</span><span class="en">Country of Birth</span></label><input type="text" name="pais_nacimiento" required /></div>
+        </div>
+        <div class="grid-2">
+          <div class="field"><label>Nacionalidad Actual <span class="req">*</span><span class="en">Current Nationality</span></label><input type="text" name="nacionalidad" required /></div>
+          <div class="field"><label>Número de Cédula / ID<span class="en">National ID Number</span></label><input type="text" name="cedula" /></div>
+        </div>
+        <div class="yn-row">
+          <div class="yn-question">¿Tiene otra nacionalidad?<span class="en">Do you hold nationality of any other country?</span></div>
+          <div class="yn-btns"><label><input type="radio" name="otra_nacionalidad" value="no" required /> No</label><label><input type="radio" name="otra_nacionalidad" value="si" /> Sí/Yes</label></div>
+        </div>
+        <div class="conditional" id="div_otra_nac"><div class="field"><label>Otra nacionalidad<span class="en">Other nationality</span></label><input type="text" name="otra_nac_pais" /></div></div>
+        <hr class="divider" />
+        <div class="grid-2">
+          <div class="field"><label>Correo Electrónico <span class="req">*</span><span class="en">Email Address</span></label><input type="email" name="email" required /></div>
+          <div class="field"><label>Confirmar Correo <span class="req">*</span><span class="en">Confirm Email</span></label><input type="email" name="email_confirm" required /></div>
+        </div>
+        <div class="grid-3">
+          <div class="field"><label>Teléfono Principal <span class="req">*</span><span class="en">Primary Phone</span></label><input type="tel" name="telefono" required /></div>
+          <div class="field"><label>Teléfono Secundario<span class="en">Secondary Phone</span></label><input type="tel" name="telefono2" /></div>
+          <div class="field"><label>Teléfono de Trabajo<span class="en">Work Phone</span></label><input type="tel" name="telefono_trabajo" /></div>
+        </div>
+        <div class="field"><label>Dirección de Residencia Actual <span class="req">*</span><span class="en">Current Home Address</span></label><input type="text" name="direccion" required /></div>
+        <div class="grid-3">
+          <div class="field"><label>Ciudad <span class="req">*</span><span class="en">City</span></label><input type="text" name="ciudad_residencia" required /></div>
+          <div class="field"><label>Estado/Provincia<span class="en">State/Province</span></label><input type="text" name="estado_residencia" /></div>
+          <div class="field"><label>País de Residencia <span class="req">*</span><span class="en">Country of Residence</span></label><input type="text" name="pais_residencia" required /></div>
+        </div>
+        <div class="yn-row">
+          <div class="yn-question">¿Ha vivido en algún otro lugar en los últimos 5 años?<span class="en">Have you lived anywhere else in the last 5 years?</span></div>
+          <div class="yn-btns"><label><input type="radio" name="otra_residencia" value="no" required /> No</label><label><input type="radio" name="otra_residencia" value="si" /> Sí/Yes</label></div>
+        </div>
+        <div class="conditional" id="div_otra_res"><div class="field"><label>Dirección anterior<span class="en">Previous address and dates</span></label><textarea name="residencia_anterior"></textarea></div></div>
+        <div class="field"><label>Redes sociales (últimos 5 años)<span class="en">Social Media last 5 years</span></label><textarea name="redes_sociales" placeholder="Facebook, Instagram, X, LinkedIn, TikTok — usuario/username"></textarea></div>
+      </div>
+    </div>
+    <!-- 2. PASAPORTE -->
+    <div class="section">
+      <div class="section-header"><span class="icon">🛂</span><h2>2. Pasaporte / Travel Document</h2></div>
+      <div class="section-body">
+        <div class="grid-2">
+          <div class="field"><label>Tipo de Documento <span class="req">*</span><span class="en">Document Type</span></label><select name="tipo_pasaporte" required><option value="">Seleccione</option><option value="regular">Pasaporte Regular</option><option value="diplomatico">Diplomático</option><option value="oficial">Oficial</option><option value="otro">Otro</option></select></div>
+          <div class="field"><label>Número de Pasaporte <span class="req">*</span><span class="en">Passport Number</span></label><input type="text" name="num_pasaporte" required /></div>
+        </div>
+        <div class="grid-3">
+          <div class="field"><label>País Emisor <span class="req">*</span><span class="en">Issuing Country</span></label><input type="text" name="pais_emisor" required /></div>
+          <div class="field"><label>Ciudad Emisora<span class="en">City of Issuance</span></label><input type="text" name="ciudad_emisora" /></div>
+          <div class="field"><label>Estado Emisor<span class="en">State of Issuance</span></label><input type="text" name="estado_emisor" /></div>
+        </div>
+        <div class="grid-2">
+          <div class="field"><label>Fecha de Emisión <span class="req">*</span><span class="en">Issue Date</span></label><input type="date" name="fecha_emision" required /></div>
+          <div class="field"><label>Fecha de Vencimiento <span class="req">*</span><span class="en">Expiration Date</span></label><input type="date" name="fecha_vencimiento" required /></div>
+        </div>
+        <div class="yn-row">
+          <div class="yn-question">¿Ha perdido o le han robado algún pasaporte?<span class="en">Have you ever lost a passport or had one stolen?</span></div>
+          <div class="yn-btns"><label><input type="radio" name="pasaporte_perdido" value="no" required /> No</label><label><input type="radio" name="pasaporte_perdido" value="si" /> Sí/Yes</label></div>
+        </div>
+        <div class="conditional" id="div_pas_perdido">
+          <div class="grid-2">
+            <div class="field"><label>Número del pasaporte perdido<span class="en">Number of lost passport</span></label><input type="text" name="pas_perdido_num" /></div>
+            <div class="field"><label>País emisor<span class="en">Country of lost passport</span></label><input type="text" name="pas_perdido_pais" /></div>
+          </div>
+          <div class="field"><label>Circunstancias<span class="en">Explain circumstances</span></label><textarea name="pas_perdido_explicacion"></textarea></div>
+        </div>
+      </div>
+    </div>
+    <!-- 3. INFORMACIÓN DEL VIAJE -->
+    <div class="section">
+      <div class="section-header"><span class="icon">✈️</span><h2>3. Información del Viaje <small>/ Travel Information</small></h2></div>
+      <div class="section-body">
+        <div class="grid-2">
+          <div class="field"><label>Propósito Principal del Viaje <span class="req">*</span><span class="en">Primary Purpose of Trip</span></label><select name="proposito_viaje" required><option value="">Seleccione</option><option value="turismo">Turismo / Tourism (B-2)</option><option value="negocios">Negocios / Business (B-1)</option><option value="turismo_negocios">Turismo y Negocios (B-1/B-2)</option><option value="transito">Tránsito (C)</option><option value="trabajo_temporal">Trabajo temporal (H)</option><option value="estudiante">Estudiante (F/M)</option><option value="intercambio">Intercambio (J)</option><option value="tratamiento_medico">Tratamiento médico</option><option value="otro">Otro</option></select></div>
+          <div class="field"><label>Especifique el propósito<span class="en">Specify purpose</span></label><input type="text" name="proposito_especifico" placeholder="Vacaciones, reunión, visita familiar..." /></div>
+        </div>
+        <div class="grid-3">
+          <div class="field"><label>Fecha de Llegada Prevista <span class="req">*</span><span class="en">Intended Arrival Date</span></label><input type="date" name="fecha_llegada" required /></div>
+          <div class="field"><label>Duración de Estadía <span class="req">*</span><span class="en">Length of Stay</span></label><input type="text" name="duracion_estadia" placeholder="Ej: 10 días" required /></div>
+          <div class="field"><label>Número de Entradas<span class="en">Number of Entries</span></label><select name="num_entradas"><option value="">Seleccione</option><option value="una">Una / One</option><option value="multiple">Múltiples / Multiple</option></select></div>
+        </div>
+        <div class="subsection-title">Dirección en EE.UU. / U.S. Address During Stay</div>
+        <div class="field"><label>Hotel o Dirección donde se hospedará <span class="req">*</span><span class="en">Hotel/Address in U.S.</span></label><input type="text" name="direccion_eeuu" required /></div>
+        <div class="grid-3">
+          <div class="field"><label>Ciudad <span class="req">*</span></label><input type="text" name="ciudad_eeuu" required /></div>
+          <div class="field"><label>Estado <span class="req">*</span></label><input type="text" name="estado_eeuu" required /></div>
+          <div class="field"><label>Código ZIP</label><input type="text" name="zip_eeuu" /></div>
+        </div>
+        <hr class="divider" />
+        <div class="subsection-title">Financiamiento / Trip Funding</div>
+        <div class="field"><label>¿Quién financiará su viaje? <span class="req">*</span><span class="en">Who will pay for this trip?</span></label><select name="financiador" id="financiador" required><option value="">Seleccione</option><option value="propio">Yo mismo / Myself</option><option value="empleador">Mi empleador</option><option value="familiar">Familiar</option><option value="empresa_eeuu">Empresa en EE.UU.</option><option value="otro">Otro</option></select></div>
+        <div class="conditional" id="div_financiador_otro"><div class="field"><label>Nombre y relación del financiador<span class="en">Name/relationship of person paying</span></label><input type="text" name="financiador_nombre" /></div></div>
+        <div class="field"><label>Fondos disponibles para el viaje<span class="en">Estimated funds available</span></label><input type="text" name="fondos_viaje" placeholder="Ej: $3,000 USD" /></div>
+      </div>
+    </div>
+    <!-- 4. COMPAÑEROS -->
+    <div class="section">
+      <div class="section-header"><span class="icon">👥</span><h2>4. Compañeros de Viaje <small>/ Travel Companions</small></h2></div>
+      <div class="section-body">
+        <div class="yn-row">
+          <div class="yn-question">¿Viaja acompañado/a?<span class="en">Are you traveling with anyone?</span></div>
+          <div class="yn-btns"><label><input type="radio" name="viaja_acompanado" value="no" required /> No</label><label><input type="radio" name="viaja_acompanado" value="si" /> Sí/Yes</label></div>
+        </div>
+        <div class="conditional" id="div_acompanantes">
+          <div class="field"><label>¿Hace parte de un grupo organizado?<span class="en">Part of an organized group?</span></label><select name="grupo_organizado"><option value="no">No</option><option value="si">Sí / Yes</option></select></div>
+          <div class="conditional" id="div_grupo"><div class="field"><label>Nombre del grupo<span class="en">Group name</span></label><input type="text" name="nombre_grupo" /></div></div>
+          <div class="field"><label>Nombres y relación de los acompañantes<span class="en">Names and relationship of companions</span></label><textarea name="acompanantes" placeholder="Nombre completo — Relación / Full name — Relationship"></textarea></div>
+        </div>
+      </div>
+    </div>
+    <!-- 5. VIAJES ANTERIORES -->
+    <div class="section">
+      <div class="section-header"><span class="icon">🗽</span><h2>5. Viajes Anteriores a EE.UU. <small>/ Previous U.S. Travel</small></h2></div>
+      <div class="section-body">
+        <div class="yn-row">
+          <div class="yn-question">¿Ha viajado a los Estados Unidos anteriormente?<span class="en">Have you ever been in the U.S. before?</span></div>
+          <div class="yn-btns"><label><input type="radio" name="viaje_anterior_eeuu" value="no" required /> No</label><label><input type="radio" name="viaje_anterior_eeuu" value="si" /> Sí/Yes</label></div>
+        </div>
+        <div class="conditional" id="div_viaje_ant"><div class="field"><label>Fechas y duración de viajes anteriores<span class="en">Dates and duration of previous trips</span></label><textarea name="viajes_ant_fechas"></textarea></div></div>
+        <hr class="divider" />
+        <div class="yn-row">
+          <div class="yn-question">¿Ha tenido visa de EE.UU. anteriormente?<span class="en">Have you ever been issued a U.S. visa?</span></div>
+          <div class="yn-btns"><label><input type="radio" name="visa_anterior" value="no" required /> No</label><label><input type="radio" name="visa_anterior" value="si" /> Sí/Yes</label></div>
+        </div>
+        <div class="conditional" id="div_visa_ant">
+          <div class="grid-3">
+            <div class="field"><label>Número de visa anterior</label><input type="text" name="visa_ant_numero" /></div>
+            <div class="field"><label>Fecha de emisión</label><input type="date" name="visa_ant_fecha" /></div>
+            <div class="field"><label>Tipo de visa</label><input type="text" name="visa_ant_tipo" placeholder="B1/B2, F-1..." /></div>
+          </div>
+        </div>
+        <hr class="divider" />
+        <div class="yn-row">
+          <div class="yn-question">¿Le han negado alguna vez una visa de EE.UU.?<span class="en">Have you ever been refused a U.S. visa?</span></div>
+          <div class="yn-btns"><label><input type="radio" name="visa_negada" value="no" required /> No</label><label><input type="radio" name="visa_negada" value="si" /> Sí/Yes</label></div>
+        </div>
+        <div class="conditional" id="div_visa_negada"><div class="field"><label>Explique cuándo, dónde y por qué<span class="en">Explain when, where and why</span></label><textarea name="visa_negada_explicacion"></textarea></div></div>
+        <div class="yn-row">
+          <div class="yn-question">¿Alguna persona ha tramitado una petición de inmigrante en su nombre?<span class="en">Has anyone filed an immigrant petition on your behalf?</span></div>
+          <div class="yn-btns"><label><input type="radio" name="peticion_inmigrante" value="no" required /> No</label><label><input type="radio" name="peticion_inmigrante" value="si" /> Sí/Yes</label></div>
+        </div>
+        <div class="conditional" id="div_peticion_inm"><div class="field"><label>Explique<span class="en">Explain</span></label><textarea name="peticion_inm_explicacion"></textarea></div></div>
+        <hr class="divider" />
+        <div class="subsection-title">Otros Países Visitados / Other Countries (últimos 5 años)</div>
+        <div class="field"><label>Liste los países que ha visitado en los últimos 5 años<span class="en">Countries visited in last 5 years</span></label><textarea name="paises_visitados" placeholder="País — Año — Propósito / Country — Year — Purpose"></textarea></div>
+      </div>
+    </div>
+    <!-- 6. CONTACTO EN EE.UU. -->
+    <div class="section">
+      <div class="section-header"><span class="icon">📞</span><h2>6. Contacto en EE.UU. <small>/ U.S. Point of Contact</small></h2></div>
+      <div class="section-body">
+        <div class="field"><label>Nombre del Contacto en EE.UU. <span class="req">*</span><span class="en">U.S. Contact Name</span></label><input type="text" name="contacto_eeuu_nombre" required /></div>
+        <div class="grid-2">
+          <div class="field"><label>Relación <span class="req">*</span><span class="en">Relationship</span></label><select name="contacto_eeuu_relacion" required><option value="">Seleccione</option><option value="amigo">Amigo/a</option><option value="familiar">Familiar</option><option value="empleador">Empleador</option><option value="hotel">Hotel</option><option value="escuela">Escuela</option><option value="otro">Otro</option></select></div>
+          <div class="field"><label>Teléfono <span class="req">*</span><span class="en">Contact Phone</span></label><input type="tel" name="contacto_eeuu_tel" required /></div>
+        </div>
+        <div class="field"><label>Dirección en EE.UU. <span class="req">*</span><span class="en">U.S. Address</span></label><input type="text" name="contacto_eeuu_dir" required /></div>
+        <div class="grid-2">
+          <div class="field"><label>Ciudad <span class="req">*</span></label><input type="text" name="contacto_eeuu_ciudad" required /></div>
+          <div class="field"><label>Estado <span class="req">*</span></label><input type="text" name="contacto_eeuu_estado" required /></div>
+        </div>
+      </div>
+    </div>
+    <!-- 7. INFORMACIÓN FAMILIAR -->
+    <div class="section">
+      <div class="section-header"><span class="icon">👨‍👩‍👧‍👦</span><h2>7. Información Familiar <small>/ Family Information</small></h2></div>
+      <div class="section-body">
+        <div class="subsection-title">Padre / Father</div>
+        <div class="grid-2">
+          <div class="field"><label>Apellidos del Padre <span class="req">*</span></label><input type="text" name="padre_apellidos" required /></div>
+          <div class="field"><label>Nombres del Padre <span class="req">*</span></label><input type="text" name="padre_nombres" required /></div>
+        </div>
+        <div class="grid-3">
+          <div class="field"><label>Fecha de Nacimiento</label><input type="date" name="padre_nacimiento" /></div>
+          <div class="field"><label>Nacionalidad</label><input type="text" name="padre_nacionalidad" /></div>
+          <div class="field"><label>País de Nacimiento</label><input type="text" name="padre_pais_nac" /></div>
+        </div>
+        <div class="yn-row">
+          <div class="yn-question">¿Su padre se encuentra en EE.UU.?<span class="en">Is your father in the U.S.?</span></div>
+          <div class="yn-btns"><label><input type="radio" name="padre_eeuu" value="no" required /> No</label><label><input type="radio" name="padre_eeuu" value="si" /> Sí/Yes</label></div>
+        </div>
+        <div class="conditional" id="div_padre_eeuu"><div class="field"><label>Estatus migratorio</label><select name="padre_status_eeuu"><option value="">Seleccione</option><option value="ciudadano">Ciudadano</option><option value="residente">Residente permanente</option><option value="visa_no_inm">Visa no inmigrante</option><option value="ilegal">Indocumentado</option><option value="otro">Otro</option></select></div></div>
+        <hr class="divider" />
+        <div class="subsection-title">Madre / Mother</div>
+        <div class="grid-2">
+          <div class="field"><label>Apellidos de la Madre <span class="req">*</span></label><input type="text" name="madre_apellidos" required /></div>
+          <div class="field"><label>Nombres de la Madre <span class="req">*</span></label><input type="text" name="madre_nombres" required /></div>
+        </div>
+        <div class="grid-3">
+          <div class="field"><label>Fecha de Nacimiento</label><input type="date" name="madre_nacimiento" /></div>
+          <div class="field"><label>Nacionalidad</label><input type="text" name="madre_nacionalidad" /></div>
+          <div class="field"><label>País de Nacimiento</label><input type="text" name="madre_pais_nac" /></div>
+        </div>
+        <div class="yn-row">
+          <div class="yn-question">¿Su madre se encuentra en EE.UU.?<span class="en">Is your mother in the U.S.?</span></div>
+          <div class="yn-btns"><label><input type="radio" name="madre_eeuu" value="no" required /> No</label><label><input type="radio" name="madre_eeuu" value="si" /> Sí/Yes</label></div>
+        </div>
+        <div class="conditional" id="div_madre_eeuu"><div class="field"><label>Estatus migratorio</label><select name="madre_status_eeuu"><option value="">Seleccione</option><option value="ciudadano">Ciudadana</option><option value="residente">Residente permanente</option><option value="visa_no_inm">Visa no inmigrante</option><option value="ilegal">Indocumentada</option><option value="otro">Otro</option></select></div></div>
+        <hr class="divider" />
+        <div class="subsection-title">Cónyuge / Spouse</div>
+        <div class="conditional show" id="div_conyuge">
+          <div class="grid-2">
+            <div class="field"><label>Apellidos del Cónyuge</label><input type="text" name="conyuge_apellidos" /></div>
+            <div class="field"><label>Nombres del Cónyuge</label><input type="text" name="conyuge_nombres" /></div>
+          </div>
+          <div class="grid-3">
+            <div class="field"><label>Fecha de Nacimiento</label><input type="date" name="conyuge_nacimiento" /></div>
+            <div class="field"><label>Nacionalidad</label><input type="text" name="conyuge_nacionalidad" /></div>
+            <div class="field"><label>País de Nacimiento</label><input type="text" name="conyuge_pais_nac" /></div>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label>Dirección del Cónyuge</label><input type="text" name="conyuge_direccion" /></div>
+            <div class="field"><label>Fecha del Matrimonio</label><input type="date" name="fecha_matrimonio" /></div>
+          </div>
+        </div>
+        <hr class="divider" />
+        <div class="subsection-title">Hijos / Children</div>
+        <div class="yn-row">
+          <div class="yn-question">¿Tiene hijos?<span class="en">Do you have children?</span></div>
+          <div class="yn-btns"><label><input type="radio" name="tiene_hijos" value="no" required /> No</label><label><input type="radio" name="tiene_hijos" value="si" /> Sí/Yes</label></div>
+        </div>
+        <div class="conditional" id="div_hijos">
+          <div class="field"><label>Número de hijos</label><input type="number" name="num_hijos" min="1" max="20" /></div>
+          <div class="field"><label>Nombre y fecha de nacimiento de cada hijo</label><textarea name="hijos_info" placeholder="Nombre — Fecha de nacimiento (uno por línea)"></textarea></div>
+        </div>
+        <hr class="divider" />
+        <div class="subsection-title">Familiares en EE.UU.</div>
+        <div class="yn-row">
+          <div class="yn-question">¿Tiene familiares en EE.UU.?<span class="en">Do you have relatives in the U.S.?</span></div>
+          <div class="yn-btns"><label><input type="radio" name="familiares_eeuu" value="no" required /> No</label><label><input type="radio" name="familiares_eeuu" value="si" /> Sí/Yes</label></div>
+        </div>
+        <div class="conditional" id="div_fam_eeuu"><div class="field"><label>Nombre, relación y estatus migratorio</label><textarea name="familiares_eeuu_info"></textarea></div></div>
+      </div>
+    </div>
+    <!-- 8. TRABAJO Y EDUCACIÓN -->
+    <div class="section">
+      <div class="section-header"><span class="icon">💼</span><h2>8. Trabajo y Educación <small>/ Work &amp; Education</small></h2></div>
+      <div class="section-body">
+        <div class="subsection-title">Ocupación Actual</div>
+        <div class="field"><label>Ocupación Actual <span class="req">*</span><span class="en">Current Occupation</span></label><select name="ocupacion" id="ocupacion" required><option value="">Seleccione</option><option value="empleado">Empleado/a</option><option value="independiente">Independiente</option><option value="empresario">Empresario/Propietario</option><option value="estudiante">Estudiante</option><option value="jubilado">Jubilado/Retirado</option><option value="ama_casa">Ama/Amo de Casa</option><option value="desempleado">Desempleado/a</option><option value="otro">Otro</option></select></div>
+        <div class="field"><label>Descripción de funciones de su ocupación actual<span class="en">Description of current job duties</span></label><textarea name="descripcion_ocupacion" placeholder="Describa brevemente sus funciones y responsabilidades principales..."></textarea></div>
+        <div class="conditional" id="div_empleado">
+          <div class="subsection-title">Información del Empleador</div>
+          <div class="grid-2"><div class="field"><label>Nombre del Empleador</label><input type="text" name="empleador_nombre" /></div><div class="field"><label>Cargo / Puesto</label><input type="text" name="cargo" /></div></div>
+          <div class="field"><label>Dirección del Empleador</label><input type="text" name="empleador_dir" /></div>
+          <div class="grid-3"><div class="field"><label>Ciudad</label><input type="text" name="empleador_ciudad" /></div><div class="field"><label>País</label><input type="text" name="empleador_pais" /></div><div class="field"><label>Teléfono</label><input type="tel" name="empleador_tel" /></div></div>
+          <div class="grid-2"><div class="field"><label>Fecha de Inicio</label><input type="date" name="empleo_inicio" /></div><div class="field"><label>Salario Mensual</label><input type="text" name="salario" placeholder="RD$45,000 o USD $2,000" /></div></div>
+          <div class="field"><label>Descripción del trabajo</label><textarea name="descripcion_trabajo"></textarea></div>
+        </div>
+        <div class="conditional" id="div_negocio">
+          <div class="subsection-title">Información del Negocio</div>
+          <div class="grid-2"><div class="field"><label>Nombre del Negocio</label><input type="text" name="negocio_nombre" /></div><div class="field"><label>Tipo de Negocio</label><input type="text" name="negocio_tipo" /></div></div>
+          <div class="grid-2"><div class="field"><label>Dirección</label><input type="text" name="negocio_dir" /></div><div class="field"><label>Teléfono</label><input type="tel" name="negocio_tel" /></div></div>
+          <div class="field"><label>Ingresos mensuales</label><input type="text" name="ingresos_negocio" /></div>
+        </div>
+        <div class="conditional" id="div_estudiante">
+          <div class="subsection-title">Información Educativa</div>
+          <div class="grid-2"><div class="field"><label>Nombre de la Institución</label><input type="text" name="institucion_nombre" /></div><div class="field"><label>Carrera / Programa</label><input type="text" name="carrera" /></div></div>
+          <div class="field"><label>Dirección de la Institución</label><input type="text" name="institucion_dir" /></div>
+        </div>
+        <hr class="divider" />
+        <div class="subsection-title">Historial Educativo</div>
+        <div class="field"><label>Nivel Educativo Más Alto <span class="req">*</span></label><select name="nivel_educativo" required><option value="">Seleccione</option><option value="primaria">Primaria</option><option value="secundaria">Secundaria</option><option value="tecnico">Técnico</option><option value="universitario">Universitario</option><option value="maestria">Maestría</option><option value="doctorado">Doctorado</option></select></div>
+        <div class="field"><label>Historial de instituciones educativas<span class="en">Educational history (most recent first)</span></label><textarea name="historial_educativo" placeholder="Institución — Carrera — Año de graduación"></textarea></div>
+        <div class="field"><label>Idiomas que habla <span class="req">*</span><span class="en">Languages spoken</span></label><input type="text" name="idiomas" required placeholder="Español (nativo), Inglés (intermedio)..." /></div>
+        <hr class="divider" />
+        <div class="subsection-title">Empleo Anterior (últimos 5 años)</div>
+        <div class="yn-row">
+          <div class="yn-question">¿Ha trabajado en otros lugares en los últimos 5 años?</div>
+          <div class="yn-btns"><label><input type="radio" name="empleo_anterior" value="no" required /> No</label><label><input type="radio" name="empleo_anterior" value="si" /> Sí/Yes</label></div>
+        </div>
+        <div class="conditional" id="div_empleo_ant"><div class="field"><label>Historial de empleo anterior</label><textarea name="empleo_anterior_info" placeholder="Empresa — Cargo — Fechas inicio/fin"></textarea></div></div>
+        <div class="yn-row">
+          <div class="yn-question">¿Ha estado desempleado/a en algún momento de los últimos 5 años?</div>
+          <div class="yn-btns"><label><input type="radio" name="desempleado_5anos" value="no" required /> No</label><label><input type="radio" name="desempleado_5anos" value="si" /> Sí/Yes</label></div>
+        </div>
+        <div class="conditional" id="div_desempleo"><div class="field"><label>Explique los períodos de desempleo</label><textarea name="desempleo_explicacion"></textarea></div></div>
+      </div>
+    </div>
+    <!-- 9. PREGUNTAS DE SEGURIDAD -->
+    <div class="section">
+      <div class="section-header"><span class="icon">🔒</span><h2>9. Preguntas de Seguridad <small>/ Security &amp; Background</small></h2></div>
+      <div class="section-body">
+        <p style="font-size:.8rem;color:var(--muted);margin-bottom:18px;line-height:1.6;">Responda cada pregunta con honestidad. / Answer each question honestly.</p>
+        <div class="subsection-title">Salud / Health</div>
+        <div class="sec-q"><div class="q-text">¿Padece o ha padecido alguna enfermedad contagiosa de importancia para la salud pública?<span class="en">Communicable disease of public health significance?</span></div><div class="yn-btns"><label><input type="radio" name="sq_enfermedad" value="no" required /> No</label><label><input type="radio" name="sq_enfermedad" value="si" /> Sí/Yes</label></div></div>
+        <div class="sec-q"><div class="q-text">¿Padece algún trastorno mental o físico que represente amenaza a otros?<span class="en">Mental or physical disorder posing a threat to others?</span></div><div class="yn-btns"><label><input type="radio" name="sq_trastorno" value="no" required /> No</label><label><input type="radio" name="sq_trastorno" value="si" /> Sí/Yes</label></div></div>
+        <div class="sec-q"><div class="q-text">¿Es o ha sido drogadicto/a o abusador/a de sustancias?<span class="en">Drug abuser or addict?</span></div><div class="yn-btns"><label><input type="radio" name="sq_drogas" value="no" required /> No</label><label><input type="radio" name="sq_drogas" value="si" /> Sí/Yes</label></div></div>
+        <div class="subsection-title" style="margin-top:16px;">Antecedentes Penales / Criminal History</div>
+        <div class="sec-q"><div class="q-text">¿Ha sido arrestado o condenado por algún delito?<span class="en">Arrested or convicted for any offense?</span></div><div class="yn-btns"><label><input type="radio" name="sq_arrestado" value="no" required /> No</label><label><input type="radio" name="sq_arrestado" value="si" /> Sí/Yes</label></div></div>
+        <div class="sec-q"><div class="q-text">¿Ha traficado o facilitado el tráfico de drogas ilegales?<span class="en">Violated any law relating to controlled substances?</span></div><div class="yn-btns"><label><input type="radio" name="sq_trafico_drogas" value="no" required /> No</label><label><input type="radio" name="sq_trafico_drogas" value="si" /> Sí/Yes</label></div></div>
+        <div class="sec-q"><div class="q-text">¿Ha estado involucrado/a en prostitución o tráfico de personas?<span class="en">Involved in prostitution or human trafficking?</span></div><div class="yn-btns"><label><input type="radio" name="sq_prostitucion" value="no" required /> No</label><label><input type="radio" name="sq_prostitucion" value="si" /> Sí/Yes</label></div></div>
+        <div class="sec-q"><div class="q-text">¿Ha participado en lavado de dinero?<span class="en">Engaged in money laundering?</span></div><div class="yn-btns"><label><input type="radio" name="sq_lavado" value="no" required /> No</label><label><input type="radio" name="sq_lavado" value="si" /> Sí/Yes</label></div></div>
+        <div class="subsection-title" style="margin-top:16px;">Seguridad Nacional / National Security</div>
+        <div class="sec-q"><div class="q-text">¿Ha sido miembro de una organización terrorista o extremista?<span class="en">Member of a terrorist or extremist organization?</span></div><div class="yn-btns"><label><input type="radio" name="sq_terrorismo" value="no" required /> No</label><label><input type="radio" name="sq_terrorismo" value="si" /> Sí/Yes</label></div></div>
+        <div class="sec-q"><div class="q-text">¿Ha participado en genocidio, tortura o violaciones graves a los derechos humanos?<span class="en">Participated in genocide, torture, or serious human rights violations?</span></div><div class="yn-btns"><label><input type="radio" name="sq_genocidio" value="no" required /> No</label><label><input type="radio" name="sq_genocidio" value="si" /> Sí/Yes</label></div></div>
+        <div class="sec-q"><div class="q-text">¿Ha servido en las fuerzas armadas de algún país?<span class="en">Served in the military?</span></div><div class="yn-btns"><label><input type="radio" name="sq_militar" value="no" required /> No</label><label><input type="radio" name="sq_militar" value="si" /> Sí/Yes</label></div></div>
+        <div class="conditional" id="div_militar">
+          <div class="grid-3"><div class="field"><label>País</label><input type="text" name="militar_pais" /></div><div class="field"><label>Rango</label><input type="text" name="militar_rango" /></div><div class="field"><label>Especialidad</label><input type="text" name="militar_especialidad" /></div></div>
+          <div class="grid-2"><div class="field"><label>Fecha inicio</label><input type="date" name="militar_inicio" /></div><div class="field"><label>Fecha fin</label><input type="date" name="militar_fin" /></div></div>
+        </div>
+        <div class="subsection-title" style="margin-top:16px;">Inmigración / Immigration</div>
+        <div class="sec-q"><div class="q-text">¿Ha permanecido en EE.UU. más tiempo del autorizado?<span class="en">Overstayed a U.S. visa?</span></div><div class="yn-btns"><label><input type="radio" name="sq_overstay" value="no" required /> No</label><label><input type="radio" name="sq_overstay" value="si" /> Sí/Yes</label></div></div>
+        <div class="sec-q"><div class="q-text">¿Ha sido deportado o removido de EE.UU.?<span class="en">Deported or removed from the U.S.?</span></div><div class="yn-btns"><label><input type="radio" name="sq_deportado" value="no" required /> No</label><label><input type="radio" name="sq_deportado" value="si" /> Sí/Yes</label></div></div>
+        <div class="sec-q"><div class="q-text">¿Tiene intención de trabajar o estudiar en EE.UU. durante esta visita?<span class="en">Intend to work or study in the U.S.?</span></div><div class="yn-btns"><label><input type="radio" name="sq_intension_trabajo" value="no" required /> No</label><label><input type="radio" name="sq_intension_trabajo" value="si" /> Sí/Yes</label></div></div>
+        <div class="sec-q"><div class="q-text">¿Tiene intención de establecerse permanentemente en EE.UU.?<span class="en">Intend to permanently reside in the U.S.?</span></div><div class="yn-btns"><label><input type="radio" name="sq_intencion_residir" value="no" required /> No</label><label><input type="radio" name="sq_intencion_residir" value="si" /> Sí/Yes</label></div></div>
+        <div class="field" style="margin-top:18px;"><label>Si respondió "Sí" a alguna pregunta, proporcione explicación:<span class="en">If "Yes" to any above, provide detailed explanation:</span></label><textarea name="sq_explicaciones" placeholder="Indique la pregunta y todos los detalles relevantes..."></textarea></div>
+      </div>
+    </div>
+    <!-- 10. DOCUMENTOS -->
+    <div class="section">
+      <div class="section-header"><span class="icon">📎</span><h2>10. Documentos a Entregar <small>/ Documents to Submit</small></h2></div>
+      <div class="section-body">
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px;">Marque los documentos que entregará / Check the documents you will submit</p>
+        <div class="check-group">
+          <label><input type="checkbox" name="doc_pasaporte" value="Sí" /> Pasaporte vigente (mínimo 6 meses)</label>
+          <label><input type="checkbox" name="doc_cedula" value="Sí" /> Copia de cédula / ID</label>
+          <label><input type="checkbox" name="doc_foto" value="Sí" /> Foto tipo pasaporte reciente</label>
+          <label><input type="checkbox" name="doc_banco" value="Sí" /> Estados de cuenta bancarios (últimos 3–6 meses)</label>
+          <label><input type="checkbox" name="doc_empleo" value="Sí" /> Carta de empleo con salario</label>
+          <label><input type="checkbox" name="doc_negocio" value="Sí" /> Documentos del negocio (RNC, registro)</label>
+          <label><input type="checkbox" name="doc_declaracion" value="Sí" /> Declaración de impuestos</label>
+          <label><input type="checkbox" name="doc_titulo" value="Sí" /> Título universitario o certificado educativo</label>
+          <label><input type="checkbox" name="doc_visa_ant" value="Sí" /> Copia de visa anterior</label>
+          <label><input type="checkbox" name="doc_itinerario" value="Sí" /> Itinerario de viaje</label>
+          <label><input type="checkbox" name="doc_hotel" value="Sí" /> Reservación de hotel</label>
+          <label><input type="checkbox" name="doc_matrimonio" value="Sí" /> Acta de matrimonio (si aplica)</label>
+          <label><input type="checkbox" name="doc_nacimiento_hijos" value="Sí" /> Actas de nacimiento de hijos (si aplica)</label>
+          <label><input type="checkbox" name="doc_invitacion" value="Sí" /> Carta de invitación (si aplica)</label>
+          <label><input type="checkbox" name="doc_propiedad" value="Sí" /> Documentos de propiedad (casa, carro)</label>
+        </div>
+        <hr class="divider" />
+        <div class="field"><label>Comentarios adicionales / Additional Comments</label><textarea name="comentarios" placeholder="Cualquier información adicional relevante..."></textarea></div>
+      </div>
+    </div>
+    <!-- FIRMA -->
+    <div class="signature-block">
+      <p><strong>Declaración / Declaration</strong></p>
+      <p>Declaro bajo pena de perjurio que toda la información que he proporcionado es verdadera, correcta y completa. Entiendo que proporcionar información falsa puede resultar en el rechazo de mi visa.</p>
+      <p><em>I declare that all information provided is true, correct, and complete. I understand that false information may result in visa denial.</em></p>
+    </div>
+    <div class="grid-2">
+      <div class="field"><label>Nombre completo (firma electrónica) <span class="req">*</span><span class="en">Full Name (electronic signature)</span></label><input type="text" name="firma_nombre" required /></div>
+      <div class="field"><label>Fecha <span class="req">*</span></label><input type="date" name="firma_fecha" id="firma_fecha" required /></div>
+    </div>
+    <div class="confirm-check" style="margin-top:16px;">
+      <input type="checkbox" id="agree" name="agree" required />
+      <label for="agree">Confirmo que toda la información es correcta y autorizo a CCServices a utilizarla para tramitar mi solicitud de visa B1/B2. / I confirm all information is accurate and authorize CCServices to process my DS-160 application.</label>
+    </div>
+    <button type="submit" class="btn-submit">✈️ Enviar Información / Submit Information</button>
+  </form>
+  <div class="footer">
+    <span style="color:var(--teal-dark);font-weight:700;">CCServices</span> &mdash; rceballos@ccservicesdo.com &mdash; DS-160 Intake Form v2.0 &mdash; 2026
+  </div>
+</div>
+<script>
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwqiaYy2FGBn0GffM1NXp8WAVLBCEuNzdRuCifetba6cv4yx-Hk2tCFvFWOLkDfmnBWjg/exec";
+
+  document.getElementById('firma_fecha').valueAsDate = new Date();
+
+  // Progress bar
+  function updateProgress(){
+    const required = document.querySelectorAll('[required]');
+    let filled = 0;
+    required.forEach(el => {
+      if(el.type==='radio'){ if([...document.querySelectorAll(`[name="${el.name}"]`)].some(r=>r.checked)) filled++; }
+      else if(el.type==='checkbox'){ if(el.checked) filled++; }
+      else { if(el.value.trim()) filled++; }
+    });
+    const pct = Math.round((filled/required.length)*100);
+    document.getElementById('progressBar').style.width = pct+'%';
+    document.getElementById('progressLabel').textContent = pct+'% completado / completed';
+  }
+  document.getElementById('ds160Form').addEventListener('input', updateProgress);
+
+  // Conditional toggles
+  function toggle(radioName, showVal, divId){
+    document.querySelectorAll(`[name="${radioName}"]`).forEach(r => r.addEventListener('change', function(){
+      document.getElementById(divId).classList.toggle('show', this.value===showVal);
+    }));
+  }
+  toggle('otro_nombre','si','div_otro_nombre');
+  toggle('otra_nacionalidad','si','div_otra_nac');
+  toggle('otra_residencia','si','div_otra_res');
+  toggle('pasaporte_perdido','si','div_pas_perdido');
+  toggle('viaje_anterior_eeuu','si','div_viaje_ant');
+  toggle('visa_anterior','si','div_visa_ant');
+  toggle('visa_negada','si','div_visa_negada');
+  toggle('peticion_inmigrante','si','div_peticion_inm');
+  toggle('viaja_acompanado','si','div_acompanantes');
+  toggle('padre_eeuu','si','div_padre_eeuu');
+  toggle('madre_eeuu','si','div_madre_eeuu');
+  toggle('tiene_hijos','si','div_hijos');
+  toggle('familiares_eeuu','si','div_fam_eeuu');
+  toggle('empleo_anterior','si','div_empleo_ant');
+  toggle('desempleado_5anos','si','div_desempleo');
+  toggle('sq_militar','si','div_militar');
+
+  document.getElementById('estado_civil').addEventListener('change', function(){
+    document.getElementById('div_conyuge').classList.toggle('show', ['casado','union_libre','divorciado','viudo','separado'].includes(this.value));
+  });
+  document.querySelector('[name="grupo_organizado"]').addEventListener('change', function(){
+    document.getElementById('div_grupo').classList.toggle('show', this.value==='si');
+  });
+  document.getElementById('ocupacion').addEventListener('change', function(){
+    ['div_empleado','div_negocio','div_estudiante'].forEach(d=>document.getElementById(d).classList.remove('show'));
+    if(this.value==='empleado') document.getElementById('div_empleado').classList.add('show');
+    if(['independiente','empresario'].includes(this.value)) document.getElementById('div_negocio').classList.add('show');
+    if(this.value==='estudiante') document.getElementById('div_estudiante').classList.add('show');
+  });
+  document.getElementById('financiador').addEventListener('change', function(){
+    document.getElementById('div_financiador_otro').classList.toggle('show', this.value!=='propio' && this.value!=='');
+  });
+
+  // Submit
+  document.getElementById('ds160Form').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const email = document.querySelector('[name="email"]').value;
+    const emailConfirm = document.querySelector('[name="email_confirm"]').value;
+    if(email !== emailConfirm){ alert('Los correos no coinciden. / Email addresses do not match.'); return; }
+    if(!document.getElementById('agree').checked){ alert('Debe aceptar la declaración. / You must accept the declaration.'); return; }
+    const btn = document.querySelector('.btn-submit');
+    btn.disabled = true;
+    btn.textContent = 'Enviando... / Sending...';
+    const fd = new FormData(this);
+    const payload = {};
+    fd.forEach((val, key) => { if(payload[key]) payload[key] += ', '+val; else payload[key] = val; });
+    payload.formulario = 'DS-160 Visa EE.UU.';
+    payload.fecha_envio = new Date().toLocaleString('es-DO');
+    const docs = ['doc_pasaporte','doc_cedula','doc_foto','doc_banco','doc_empleo','doc_negocio','doc_declaracion','doc_titulo','doc_visa_ant','doc_itinerario','doc_hotel','doc_matrimonio','doc_nacimiento_hijos','doc_invitacion','doc_propiedad'];
+    payload.documentos = docs.filter(d => document.querySelector(`[name="${d}"]`)?.checked).map(d=>d.replace('doc_','')).join(', ') || 'Ninguno';
+    const params = new URLSearchParams(payload);
+    fetch(WEB_APP_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' }).catch(()=>{});
+    setTimeout(() => {
+      document.getElementById('ds160Form').style.display = 'none';
+      document.getElementById('success').style.display = 'block';
+      window.scrollTo({top:0, behavior:'smooth'});
+    }, 800);
+  });
+</script>
+</body>
+</html>
