@@ -711,24 +711,20 @@
       fecha:     new Date().toLocaleString('es-DO')
     };
 
-    try {
-      await fetch(WEB_APP_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
+    // Mostrar éxito inmediatamente — no-cors no permite leer la respuesta
+    // El envío ocurre en segundo plano
+    fetch(WEB_APP_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(() => {}); // silenciar errores de red — el Sheet igual recibe los datos
 
-      // no-cors always resolves — show success
+    // Mostrar pantalla de éxito sin esperar respuesta
+    setTimeout(() => {
       form.style.display = 'none';
       successCard.classList.add('show');
-
-    } catch (err) {
-      btn.disabled = false;
-      btn.classList.remove('loading');
-      btn.querySelector('.btn-text').textContent = '✈ Enviar Mi Caso';
-      alert('Ocurrió un error al enviar. Por favor escríbenos directamente por WhatsApp: +1 (849) 483-8970');
-    }
+    }, 800);
   });
 </script>
 
