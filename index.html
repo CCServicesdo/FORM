@@ -711,16 +711,14 @@
       fecha:     new Date().toLocaleString('es-DO')
     };
 
-    // Mostrar éxito inmediatamente — no-cors no permite leer la respuesta
-    // El envío ocurre en segundo plano
-    fetch(WEB_APP_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    }).catch(() => {}); // silenciar errores de red — el Sheet igual recibe los datos
+    // GET con parámetros en URL — método más confiable con Apps Script + no-cors
+    const params = new URLSearchParams(payload);
+    fetch(WEB_APP_URL + '?' + params.toString(), {
+      method: 'GET',
+      mode: 'no-cors'
+    }).catch(() => {});
 
-    // Mostrar pantalla de éxito sin esperar respuesta
+    // Mostrar pantalla de éxito
     setTimeout(() => {
       form.style.display = 'none';
       successCard.classList.add('show');
