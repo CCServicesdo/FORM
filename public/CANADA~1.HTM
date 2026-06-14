@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visa Visitante Canadá — CCServices</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:       #1B4F7E;
+      --navy-dark:  #133A5E;
+      --cyan:       #6DC4D4;
+      --cyan-dark:  #45a8ba;
+      --cyan-light: #e6f7f9;
+      --gold:       #C4871A;
+      --gold-dark:  #a06e10;
+      --gold-light: #fff4e0;
+      --white:      #FFFFFF;
+      --gray:       #f0f7f8;
+      --border:     #c4e5eb;
+      --text:       #1e3a52;
+      --muted:      #5a7d8a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+      background: var(--gray);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, var(--cyan-dark) 0%, var(--cyan) 60%, #7dd4e4 100%);
+      color: var(--white);
+      padding: 22px 32px 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border-bottom: 5px solid var(--gold);
+    }
+    .logo-wrap {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,.2);
+    }
+    .logo-wrap img {
+      height: 64px;
+      width: auto;
+      display: block;
+      border-radius: 6px;
+    }
+    .header-text h1 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: .3px;
+      text-shadow: 0 1px 3px rgba(0,0,0,.2);
+    }
+    .header-text h1 .sub {
+      font-weight: 500;
+      font-size: .9rem;
+      opacity: .9;
+    }
+    .header-text p {
+      font-size: .81rem;
+      opacity: .85;
+      margin-top: 5px;
+    }
+    .lang-tag {
+      margin-left: auto;
+      background: var(--gold);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .8px;
+      color: var(--white);
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(196,135,26,.4);
+    }
+
+    /* ── Container ── */
+    .container {
+      max-width: 880px;
+      margin: 32px auto;
+      padding: 0 16px 60px;
+    }
+
+    /* ── Notice ── */
+    .notice {
+      background: var(--gold-light);
+      border-left: 4px solid var(--gold);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: .84rem;
+      color: #5a3e00;
+      margin-bottom: 28px;
+      line-height: 1.55;
+    }
+    .notice strong { color: var(--gold-dark); }
+
+    /* ── Section ── */
+    .section {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 10px rgba(69,168,186,.1);
+    }
+    .section-header {
+      background: linear-gradient(90deg, var(--cyan-dark) 0%, var(--cyan) 100%);
+      color: var(--white);
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-left: 5px solid var(--gold);
+    }
+    .section-header .icon { font-size: 1.2rem; }
+    .section-header h2 { font-size: .97rem; font-weight: 700; letter-spacing: .2px; }
+    .section-header small { font-size: .77rem; opacity: .8; font-style: italic; margin-left: 4px; }
+    .section-body { padding: 22px 22px 18px; }
+
+    .subsec {
+      font-size: .74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .9px;
+      color: var(--cyan-dark);
+      border-left: 3px solid var(--gold);
+      padding-left: 10px;
+      margin: 18px 0 14px;
+    }
+
+    /* ── Grid ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .span-2 { grid-column: span 2; }
+    .span-3 { grid-column: span 3; }
+    @media (max-width: 600px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .span-2, .span-3 { grid-column: span 1; }
+      .header { flex-wrap: wrap; }
+      .lang-tag { margin-left: 0; }
+    }
+
+    /* ── Fields ── */
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    .field label { font-size: .81rem; font-weight: 600; color: var(--text); line-height: 1.4; }
+    .field label .en { font-weight: 400; color: var(--muted); font-style: italic; }
+    .field label .req { color: var(--gold); margin-left: 2px; }
+    .field input,
+    .field select,
+    .field textarea {
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 13px;
+      font-size: .88rem;
+      font-family: inherit;
+      color: var(--text);
+      background: #fafdfe;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(196,135,26,.15);
+      background: var(--white);
+    }
+    .field textarea { resize: vertical; min-height: 80px; }
+    .field select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23C4871A' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+      background-color: #fafdfe;
+    }
+    .hint { font-size: .73rem; color: var(--muted); margin-top: -2px; }
+
+    hr.divider { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
+
+    /* ── Radio / Checkbox ── */
+    .radio-group { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+    .radio-group.inline { flex-direction: row; flex-wrap: wrap; gap: 16px; }
+    .radio-group label,
+    .check-group label {
+      font-size: .86rem; font-weight: 400;
+      display: flex; align-items: flex-start;
+      gap: 9px; cursor: pointer; line-height: 1.45;
+    }
+    .radio-group input[type="radio"],
+    .check-group input[type="checkbox"] {
+      width: 16px; height: 16px; margin-top: 2px;
+      accent-color: var(--gold); flex-shrink: 0;
+    }
+
+    /* ── Yes/No rows ── */
+    .yn-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .yn-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .yn-question { font-size: .86rem; line-height: 1.5; color: var(--text); }
+    .yn-question .en { display: block; font-size: .76rem; color: var(--muted); font-style: italic; margin-top: 2px; }
+    .yn-btns { display: flex; gap: 10px; }
+    .yn-btns label {
+      font-size: .82rem; font-weight: 600;
+      display: flex; align-items: center; gap: 5px;
+      cursor: pointer; white-space: nowrap;
+    }
+    .yn-btns input[type="radio"] { accent-color: var(--gold); }
+
+    /* ── Conditional ── */
+    .conditional { display: none; margin-top: 12px; }
+    .conditional.show { display: block; }
+
+    /* ── Signature ── */
+    .signature-block {
+      background: var(--cyan-light);
+      border: 1px solid var(--cyan);
+      border-radius: 10px;
+      padding: 18px 22px;
+      font-size: .84rem;
+      line-height: 1.65;
+      margin-bottom: 22px;
+      color: var(--navy-dark);
+    }
+    .signature-block p { margin-bottom: 8px; }
+    .confirm-check {
+      display: flex; align-items: flex-start;
+      gap: 10px; font-size: .86rem; line-height: 1.5; margin-top: 14px;
+    }
+    .confirm-check input { accent-color: var(--gold); margin-top: 3px; flex-shrink: 0; width: 17px; height: 17px; }
+
+    /* ── Submit Button ── */
+    .btn-submit {
+      display: block; width: 100%;
+      background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 100%);
+      color: var(--white); border: none; border-radius: 10px;
+      padding: 16px; font-size: 1.05rem; font-weight: 700;
+      letter-spacing: .5px; cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      transition: opacity .2s, transform .1s, box-shadow .2s;
+      margin-top: 12px;
+      box-shadow: 0 4px 16px rgba(196,135,26,.4);
+    }
+    .btn-submit:hover { opacity: .92; box-shadow: 0 6px 20px rgba(196,135,26,.5); }
+    .btn-submit:active { transform: scale(.99); }
+    .btn-submit:disabled { opacity: .6; cursor: not-allowed; }
+
+    /* ── Success ── */
+    #success {
+      display: none; text-align: center;
+      background: var(--white); border: 2px solid var(--gold);
+      border-radius: 14px; padding: 52px 30px; margin-top: 20px;
+    }
+    #success .check-icon { font-size: 3.5rem; margin-bottom: 14px; }
+    #success h2 { color: var(--cyan-dark); font-size: 1.45rem; margin-bottom: 10px; }
+    #success p { color: var(--muted); font-size: .92rem; margin-bottom: 6px; line-height: 1.6; }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center; font-size: .76rem;
+      color: var(--muted); margin-top: 30px;
+      border-top: 1px solid var(--border); padding-top: 18px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo-wrap">
+    <img src="https://i.postimg.cc/85fmmNgY/LOGO-CCSERVICES.jpg" alt="CCServices Logo" />
+  </div>
+  <div class="header-text">
+    <h1>CCServices <span class="sub">· Visa Visitante — Canadá / Canada Visitor Visa</span></h1>
+    <p>Complete todos los campos requeridos · Please fill all required fields</p>
+  </div>
+  <div class="lang-tag">ES / EN</div>
+</div>
+
+<div class="container">
+
+  <div class="notice">
+    <strong>⚠️ Aviso / Notice:</strong> Esta información es confidencial y se usa exclusivamente para tramitar su solicitud de Visa de Visitante a Canadá (TRV). Toda la información debe ser <strong>exactamente igual</strong> a la de su pasaporte. / This information is confidential and used solely for your Canada Visitor Visa (TRV) application. All details must <strong>exactly match</strong> your passport.
+  </div>
+
+  <form id="visaForm" novalidate>
+
+    <!-- ══ 1. INFORMACIÓN PERSONAL ══════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="icon">👤</span>
+        <h2>1. Información Personal <small>/ Personal Information</small></h2>
+      </div>
+      <div class="section-body">
+        <div class="grid-3">
+          <div class="field">
+            <label>Primer nombre <span class="req">*</span><br><span class="en">First Name (as in passport)</span></label>
+            <input type="text" name="first_name" required />
+          </div>
+          <div class="field">
+            <label>Segundo nombre<br><span class="en">Middle Name (if any)</span></label>
+            <input type="text" name="middle_name" placeholder="Si aplica / If applicable" />
+          </div>
+          <div class="field">
+            <label>Apellido(s) <span class="req">*</span><br><span class="en">Last Name(s) (as in passport)</span></label>
+            <input type="text" name="last_name" required />
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-top:16px;">
+          <div class="field">
+            <label>¿Ha usado otro nombre alguna vez?<br><span class="en">Have you used another name?</span></label>
+            <select name="other_name_used" id="sel_other_name">
+              <option value="">-- Seleccione --</option>
+              <option value="No">No</option>
+              <option value="Sí">Sí / Yes</option>
+            </select>
+          </div>
+          <div class="field" id="field_other_name" style="display:none;">
+            <label>Nombre anterior / Previous Name</label>
+            <input type="text" name="other_name" />
+          </div>
+          <div class="field">
+            <label>Sexo <span class="req">*</span><br><span class="en">Sex</span></label>
+            <select name="sex" required>
+              <option value="">-- Seleccione --</option>
+              <option value="Masculino / Male">Masculino / Male</option>
+              <option value="Femenino / Female">Femenino / Female</option>
+              <option value="No binario / Non-binary (X)">No binario / Non-binary (X)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-top:16px;">
+          <div class="field">
+            <label>Fecha de nacimiento <span class="req">*</span><br><span class="en">Date of Birth</span></label>
+            <input type="date" name="dob" required />
+          </div>
+          <div class="field">
+            <label>Ciudad de nacimiento <span class="req">*</span><br><span class="en">City of Birth</span></label>
+            <input type="text" name="city_of_birth" required />
+          </div>
+          <div class="field">
+            <label>País de nacimiento <span class="req">*</span><br><span class="en">Country of Birth</span></label>
+            <input type="text" name="country_of_birth" required />
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-top:16px;">
+          <div class="field">
+            <label>Nacionalidad actual <span class="req">*</span><br><span class="en">Current Nationality/Citizenship</span></label>
+            <input type="text" name="nationality" required />
+          </div>
+          <div class="field">
+            <label>¿Tiene otra nacionalidad?<br><span class="en">Do you hold another citizenship?</span></label>
+            <select name="other_nationality" id="sel_other_nat">
+              <option value="">-- Seleccione --</option>
+              <option value="No">No</option>
+              <option value="Sí">Sí / Yes</option>
+            </select>
+          </div>
+          <div class="field" id="field_other_nat" style="display:none;">
+            <label>Otra nacionalidad / Other citizenship</label>
+            <input type="text" name="other_nationality_country" />
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-top:16px;">
+          <div class="field">
+            <label>Estado civil <span class="req">*</span><br><span class="en">Marital Status</span></label>
+            <select name="marital_status" id="sel_marital" required>
+              <option value="">-- Seleccione --</option>
+              <option value="Soltero/a">Soltero/a / Single</option>
+              <option value="Casado/a">Casado/a / Married</option>
+              <option value="Unión libre">Unión libre / Common-law</option>
+              <option value="Divorciado/a">Divorciado/a / Divorced</option>
+              <option value="Separado/a">Separado/a / Separated</option>
+              <option value="Viudo/a">Viudo/a / Widowed</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Número de cédula / ID nacional<br><span class="en">National ID Number</span></label>
+            <input type="text" name="national_id" />
+          </div>
+          <div class="field">
+            <label>Religión (opcional)<br><span class="en">Religion (optional)</span></label>
+            <input type="text" name="religion" placeholder="Opcional / Optional" />
+          </div>
+        </div>
+
+        <!-- Cónyuge (condicional) -->
+        <div class="conditional" id="div_conyuge">
+          <div class="subsec">Información del Cónyuge / Spouse Information</div>
+          <div class="grid-3">
+            <div class="field">
+              <label>Nombre del cónyuge<br><span class="en">Spouse's Full Name</span></label>
+              <input type="text" name="spouse_name" />
+            </div>
+            <div class="field">
+              <label>Fecha de nacimiento del cónyuge<br><span class="en">Spouse's Date of Birth</span></label>
+              <input type="date" name="spouse_dob" />
+            </div>
+            <div class="field">
+              <label>Nacionalidad del cónyuge<br><span class="en">Spouse's Nationality</span></label>
+              <input type="text" name="spouse_nationality" />
+            </div>
+            <div class="field">
+              <label>Número de pasaporte del cónyuge<br><span class="en">Spouse's Passport Number</span></label>
+              <input type="text" name="spouse_passport" />
+            </div>
+            <div class="field">
+              <label>Fecha del matrimonio/unión<br><span class="en">Date of Marriage/Union</span></label>
+              <input type="date" name="marriage_date" />
+            </div>
+            <div class="field">
+              <label>¿El cónyuge viaja con usted?<br><span class="en">Is spouse traveling with you?</span></label>
+              <select name="spouse_traveling">
+                <option value="No">No</option>
+                <option value="Sí">Sí / Yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <hr class="divider" />
+        <div class="subsec">Padres / Parents</div>
+        <div class="grid-2">
+          <div class="field">
+            <label>Nombre completo del padre<br><span class="en">Father's Full Name</span></label>
+            <input type="text" name="father_name" />
+          </div>
+          <div class="field">
+            <label>Fecha de nacimiento del padre<br><span class="en">Father's Date of Birth</span></label>
+            <input type="date" name="father_dob" />
+          </div>
+          <div class="field">
+            <label>Nombre completo de la madre<br><span class="en">Mother's Full Name</span></label>
+            <input type="text" name="mother_name" />
+          </div>
+          <div class="field">
+            <label>Fecha de nacimiento de la madre<br><span class="en">Mother's Date of Birth</span></label>
+            <input type="date" name="mother_dob" />
+          </div>
+        </div>
+
+        <hr class="divider" />
+        <div class="subsec">Hijos / Children</div>
+        <div class="grid-2">
+          <div class="field">
+            <label>¿Tiene hijos?<br><span class="en">Do you have children?</span></label>
+            <select name="has_children" id="sel_children">
+              <option value="No">No</option>
+              <option value="Sí">Sí / Yes</option>
+            </select>
+          </div>
+          <div class="field" id="field_children" style="display:none;">
+            <label>Número de hijos / # of children</label>
+            <input type="number" name="num_children" min="1" max="20" />
+          </div>
+        </div>
+        <div class="conditional" id="div_children_detail">
+          <div class="field" style="margin-top:10px;">
+            <label>Nombre y fecha de nacimiento de cada hijo<br><span class="en">Name and DOB of each child</span></label>
+            <textarea name="children_info" placeholder="Nombre completo — Fecha de nacimiento / Full name — Date of birth (uno por línea / one per line)"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ 2. PASAPORTE ═══════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="icon">📘</span>
+        <h2>2. Pasaporte <small>/ Passport / Travel Document</small></h2>
+      </div>
+      <div class="section-body">
+        <div class="grid-3">
+          <div class="field">
+            <label>Tipo de documento <span class="req">*</span><br><span class="en">Document Type</span></label>
+            <select name="passport_type" required>
+              <option value="">-- Seleccione --</option>
+              <option value="Pasaporte regular">Pasaporte regular / Regular</option>
+              <option value="Pasaporte diplomático">Diplomático / Diplomatic</option>
+              <option value="Pasaporte oficial">Oficial / Official</option>
+              <option value="Otro">Otro / Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Número de pasaporte <span class="req">*</span><br><span class="en">Passport Number</span></label>
+            <input type="text" name="passport_number" placeholder="Ej: AA123456" required />
+          </div>
+          <div class="field">
+            <label>País de emisión <span class="req">*</span><br><span class="en">Country of Issue</span></label>
+            <input type="text" name="passport_country" required />
+          </div>
+          <div class="field">
+            <label>Ciudad de emisión<br><span class="en">City of Issue</span></label>
+            <input type="text" name="passport_city" />
+          </div>
+          <div class="field">
+            <label>Fecha de emisión <span class="req">*</span><br><span class="en">Issue Date</span></label>
+            <input type="date" name="passport_issue" required />
+          </div>
+          <div class="field">
+            <label>Fecha de vencimiento <span class="req">*</span><br><span class="en">Expiry Date</span></label>
+            <input type="date" name="passport_expiry" required />
+          </div>
+        </div>
+
+        <div class="yn-row" style="margin-top:14px;">
+          <div class="yn-question">¿Ha perdido o le han robado algún pasaporte?<span class="en">Have you ever lost a passport or had one stolen?</span></div>
+          <div class="yn-btns">
+            <label><input type="radio" name="passport_lost" value="No" required /> No</label>
+            <label><input type="radio" name="passport_lost" value="Sí" /> Sí/Yes</label>
+          </div>
+        </div>
+        <div class="conditional" id="div_passport_lost">
+          <div class="grid-2" style="margin-top:10px;">
+            <div class="field">
+              <label>Número del pasaporte perdido<br><span class="en">Lost passport number</span></label>
+              <input type="text" name="lost_passport_num" />
+            </div>
+            <div class="field">
+              <label>País emisor del pasaporte perdido<br><span class="en">Country of lost passport</span></label>
+              <input type="text" name="lost_passport_country" />
+            </div>
+          </div>
+        </div>
+
+        <div class="yn-row">
+          <div class="yn-question">¿Tiene pasaporte de otro país?<span class="en">Do you hold a passport from another country?</span></div>
+          <div class="yn-btns">
+            <label><input type="radio" name="other_passport" value="No" required /> No</label>
+            <label><input type="radio" name="other_passport" value="Sí" /> Sí/Yes</label>
+          </div>
+        </div>
+        <div class="conditional" id="div_other_passport">
+          <div class="field" style="margin-top:10px;">
+            <label>Detalles del otro pasaporte<br><span class="en">Other passport details (country, number, expiry)</span></label>
+            <textarea name="other_passport_details" placeholder="País, número, vencimiento / Country, number, expiry..."></textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ 3. CONTACTO ════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="icon">📞</span>
+        <h2>3. Información de Contacto <small>/ Contact Information</small></h2>
+      </div>
+      <div class="section-body">
+        <div class="grid-2">
+          <div class="field">
+            <label>Correo electrónico <span class="req">*</span><br><span class="en">Email Address</span></label>
+            <input type="email" name="email" required />
+          </div>
+          <div class="field">
+            <label>Confirmar correo <span class="req">*</span><br><span class="en">Confirm Email</span></label>
+            <input type="email" name="email_confirm" required />
+          </div>
+          <div class="field">
+            <label>Teléfono principal <span class="req">*</span><br><span class="en">Primary Phone</span></label>
+            <input type="tel" name="phone" placeholder="+1 809 000 0000" required />
+          </div>
+          <div class="field">
+            <label>Teléfono alternativo<br><span class="en">Alternate Phone</span></label>
+            <input type="tel" name="phone_alt" />
+          </div>
+          <div class="field span-2">
+            <label>Dirección residencial completa <span class="req">*</span><br><span class="en">Full Home Address</span></label>
+            <input type="text" name="address" placeholder="Calle, número, sector, ciudad / Street, number, district, city" required />
+          </div>
+          <div class="field">
+            <label>Ciudad <span class="req">*</span><br><span class="en">City</span></label>
+            <input type="text" name="city" required />
+          </div>
+          <div class="field">
+            <label>País de residencia <span class="req">*</span><br><span class="en">Country of Residence</span></label>
+            <input type="text" name="country_residence" required />
+          </div>
+        </div>
+
+        <hr class="divider" />
+        <div class="grid-2">
+          <div class="field">
+            <label>Redes sociales / Social media<br><span class="en">Social media handles (last 5 years)</span></label>
+            <input type="text" name="social_media" placeholder="Ej: Instagram @usuario, Facebook: nombre" />
+          </div>
+          <div class="field">
+            <label>Idiomas que habla <span class="req">*</span><br><span class="en">Languages spoken</span></label>
+            <input type="text" name="languages" placeholder="Ej: Español (nativo), Inglés (intermedio)" required />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 4. EMPLEO Y EDUCACIÓN ═══════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="icon">💼</span>
+        <h2>4. Empleo y Educación <small>/ Employment &amp; Education</small></h2>
+      </div>
+      <div class="section-body">
+
+        <div class="grid-3">
+          <div class="field">
+            <label>Ocupación actual <span class="req">*</span><br><span class="en">Current Occupation</span></label>
+            <select name="occupation" id="sel_occ" required>
+              <option value="">-- Seleccione --</option>
+              <option value="Empleado/a">Empleado/a / Employed</option>
+              <option value="Independiente">Independiente / Self-employed</option>
+              <option value="Empresario/a">Empresario/a / Business Owner</option>
+              <option value="Estudiante">Estudiante / Student</option>
+              <option value="Jubilado/a">Jubilado/a / Retired</option>
+              <option value="Ama/Amo de casa">Ama/Amo de casa / Homemaker</option>
+              <option value="Desempleado/a">Desempleado/a / Unemployed</option>
+              <option value="Otro">Otro / Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Cargo / Puesto<br><span class="en">Job Title / Position</span></label>
+            <input type="text" name="job_title" placeholder="Ej: Gerente, Médico, Maestra..." />
+          </div>
+          <div class="field">
+            <label>Nombre del empleador / Institución<br><span class="en">Employer / Institution Name</span></label>
+            <input type="text" name="employer_name" />
+          </div>
+          <div class="field">
+            <label>Dirección del empleador<br><span class="en">Employer Address</span></label>
+            <input type="text" name="employer_address" />
+          </div>
+          <div class="field">
+            <label>Teléfono del empleador<br><span class="en">Employer Phone</span></label>
+            <input type="tel" name="employer_phone" />
+          </div>
+          <div class="field">
+            <label>Fecha de inicio en empleo actual<br><span class="en">Start Date (current job)</span></label>
+            <input type="date" name="job_start_date" />
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:16px;">
+          <div class="field">
+            <label>Salario mensual aproximado<br><span class="en">Approximate Monthly Salary</span></label>
+            <input type="text" name="monthly_salary" placeholder="Ej: RD$50,000 / USD $1,500" />
+          </div>
+          <div class="field">
+            <label>Nivel educativo más alto <span class="req">*</span><br><span class="en">Highest Education Level</span></label>
+            <select name="education_level" required>
+              <option value="">-- Seleccione --</option>
+              <option value="Primaria">Primaria / Elementary</option>
+              <option value="Secundaria">Secundaria / High School</option>
+              <option value="Técnico/Vocacional">Técnico / Vocational</option>
+              <option value="Universitario">Universitario / University</option>
+              <option value="Maestría">Maestría / Master's</option>
+              <option value="Doctorado">Doctorado / PhD</option>
+            </select>
+          </div>
+          <div class="field span-2">
+            <label>Institución(es) educativa(s) más reciente(s)<br><span class="en">Most recent educational institution(s)</span></label>
+            <textarea name="education_history" placeholder="Institución — Carrera/Título — Año / Institution — Degree — Year"></textarea>
+          </div>
+        </div>
+
+        <hr class="divider" />
+        <div class="subsec">Empleo anterior / Previous Employment (últimos 10 años / last 10 years)</div>
+        <div class="yn-row">
+          <div class="yn-question">¿Ha tenido otros empleos en los últimos 10 años?<span class="en">Have you had other jobs in the last 10 years?</span></div>
+          <div class="yn-btns">
+            <label><input type="radio" name="prev_employment" value="No" required /> No</label>
+            <label><input type="radio" name="prev_employment" value="Sí" /> Sí/Yes</label>
+          </div>
+        </div>
+        <div class="conditional" id="div_prev_emp">
+          <div class="field" style="margin-top:10px;">
+            <label>Historial de empleo anterior<br><span class="en">Previous employment history</span></label>
+            <textarea name="prev_employment_info" placeholder="Empresa — Cargo — Fechas / Company — Position — Dates (one per line)"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ 5. INFORMACIÓN DEL VIAJE ════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="icon">✈️</span>
+        <h2>5. Información del Viaje <small>/ Travel Information</small></h2>
+      </div>
+      <div class="section-body">
+
+        <div class="grid-3">
+          <div class="field">
+            <label>Propósito del viaje <span class="req">*</span><br><span class="en">Purpose of Visit</span></label>
+            <select name="travel_purpose" required>
+              <option value="">-- Seleccione --</option>
+              <option value="Turismo">Turismo / Tourism</option>
+              <option value="Visita familiar">Visita familiar / Family visit</option>
+              <option value="Negocios">Negocios / Business</option>
+              <option value="Tránsito">Tránsito / Transit</option>
+              <option value="Tratamiento médico">Tratamiento médico / Medical</option>
+              <option value="Conferencia/Evento">Conferencia / Conference</option>
+              <option value="Otro">Otro / Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Fecha estimada de llegada <span class="req">*</span><br><span class="en">Estimated Arrival Date</span></label>
+            <input type="date" name="arrival_date" required />
+          </div>
+          <div class="field">
+            <label>Fecha estimada de salida <span class="req">*</span><br><span class="en">Estimated Departure Date</span></label>
+            <input type="date" name="departure_date" required />
+          </div>
+          <div class="field">
+            <label>Duración de la estadía <span class="req">*</span><br><span class="en">Length of Stay</span></label>
+            <input type="text" name="stay_duration" placeholder="Ej: 15 días / 15 days" required />
+          </div>
+          <div class="field">
+            <label>Ciudad(es) a visitar <span class="req">*</span><br><span class="en">City/Cities to Visit</span></label>
+            <input type="text" name="cities_to_visit" placeholder="Ej: Toronto, Montreal..." required />
+          </div>
+          <div class="field">
+            <label>Provincia(s)<br><span class="en">Province(s)</span></label>
+            <input type="text" name="provinces" placeholder="Ej: Ontario, Quebec..." />
+          </div>
+          <div class="field span-3">
+            <label>Dirección donde se hospedará en Canadá <span class="req">*</span><br><span class="en">Address Where You Will Stay in Canada</span></label>
+            <input type="text" name="address_in_canada" placeholder="Hotel, nombre y dirección / Hotel name and address" required />
+          </div>
+        </div>
+
+        <hr class="divider" />
+        <div class="subsec">Financiamiento / Trip Funding</div>
+        <div class="grid-3">
+          <div class="field">
+            <label>¿Quién financia el viaje? <span class="req">*</span><br><span class="en">Who is paying for the trip?</span></label>
+            <select name="trip_funder" id="sel_funder" required>
+              <option value="">-- Seleccione --</option>
+              <option value="Yo mismo/a">Yo mismo/a / Myself</option>
+              <option value="Empleador">Mi empleador / My employer</option>
+              <option value="Familiar">Familiar / Family member</option>
+              <option value="Contacto en Canadá">Contacto en Canadá / Contact in Canada</option>
+              <option value="Otro">Otro / Other</option>
+            </select>
+          </div>
+          <div class="field" id="field_funder_name" style="display:none;">
+            <label>Nombre del financiador<br><span class="en">Name of person/org. funding the trip</span></label>
+            <input type="text" name="funder_name" />
+          </div>
+          <div class="field">
+            <label>Fondos disponibles para el viaje<br><span class="en">Funds available for the trip</span></label>
+            <input type="text" name="available_funds" placeholder="Ej: USD $3,000 / CAD $4,000" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ 6. CONTACTO EN CANADÁ ══════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="icon">🤝</span>
+        <h2>6. Contacto en Canadá <small>/ Contact in Canada</small></h2>
+      </div>
+      <div class="section-body">
+        <div class="grid-3">
+          <div class="field">
+            <label>Nombre completo del contacto<br><span class="en">Contact's Full Name</span></label>
+            <input type="text" name="contact_canada_name" />
+          </div>
+          <div class="field">
+            <label>Relación con el contacto<br><span class="en">Relationship to You</span></label>
+            <select name="contact_canada_rel">
+              <option value="">-- Seleccione --</option>
+              <option value="Amigo/a">Amigo/a / Friend</option>
+              <option value="Familiar">Familiar / Relative</option>
+              <option value="Empleador">Empleador / Employer</option>
+              <option value="Hotel">Hotel</option>
+              <option value="Institución">Institución / Institution</option>
+              <option value="Otro">Otro / Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Teléfono del contacto<br><span class="en">Contact's Phone</span></label>
+            <input type="tel" name="contact_canada_phone" placeholder="+1 ..." />
+          </div>
+          <div class="field span-2">
+            <label>Dirección del contacto en Canadá<br><span class="en">Contact's Address in Canada</span></label>
+            <input type="text" name="contact_canada_address" />
+          </div>
+          <div class="field">
+            <label>Estatus migratorio del contacto<br><span class="en">Contact's Immigration Status</span></label>
+            <select name="contact_canada_status">
+              <option value="">-- Seleccione --</option>
+              <option value="Ciudadano canadiense">Ciudadano canadiense / Citizen</option>
+              <option value="Residente permanente">Residente permanente / PR</option>
+              <option value="Visa temporal">Visa temporal / Temp. visa</option>
+              <option value="No aplica">No aplica / N/A</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 7. HISTORIAL DE VIAJES ══════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="icon">🌎</span>
+        <h2>7. Historial de Viajes <small>/ Travel History</small></h2>
+      </div>
+      <div class="section-body">
+
+        <div class="yn-row">
+          <div class="yn-question">¿Ha viajado a Canadá anteriormente?<span class="en">Have you traveled to Canada before?</span></div>
+          <div class="yn-btns">
+            <label><input type="radio" name="prev_canada" value="No" required /> No</label>
+            <label><input type="radio" name="prev_canada" value="Sí" /> Sí/Yes</label>
+          </div>
+        </div>
+        <div class="conditional" id="div_prev_canada">
+          <div class="field" style="margin-top:10px;">
+            <label>Fechas y propósito de viajes anteriores a Canadá<br><span class="en">Dates and purpose of previous Canada trips</span></label>
+            <textarea name="prev_canada_details" placeholder="Ej: Junio 2022 — 2 semanas — turismo / e.g.: June 2022 — 2 weeks — tourism"></textarea>
+          </div>
+        </div>
+
+        <div class="yn-row">
+          <div class="yn-question">¿Ha viajado a EE.UU. en los últimos 10 años o tiene visa vigente?<span class="en">Have you traveled to or hold a visa for the U.S. in the last 10 years?</span></div>
+          <div class="yn-btns">
+            <label><input type="radio" name="prev_usa" value="No" required /> No</label>
+            <label><input type="radio" name="prev_usa" value="Sí" /> Sí/Yes</label>
+          </div>
+        </div>
+        <div class="conditional" id="div_prev_usa">
+          <div class="grid-2" style="margin-top:10px;">
+            <div class="field">
+              <label>Tipo de visa de EE.UU.<br><span class="en">U.S. visa type</span></label>
+              <input type="text" name="usa_visa_type" placeholder="Ej: B1/B2, F-1..." />
+            </div>
+            <div class="field">
+              <label>Vencimiento de la visa<br><span class="en">U.S. visa expiry</span></label>
+              <input type="date" name="usa_visa_expiry" />
+            </div>
+          </div>
+        </div>
+
+        <div class="yn-row">
+          <div class="yn-question">¿Ha sido rechazado/a para una visa canadiense o le han negado entrada a Canadá?<span class="en">Have you ever been refused a Canadian visa or been denied entry to Canada?</span></div>
+          <div class="yn-btns">
+            <label><input type="radio" name="canada_refused" value="No" required /> No</label>
+            <label><input type="radio" name="canada_refused" value="Sí" /> Sí/Yes</label>
+          </div>
+        </div>
+        <div class="conditional" id="div_canada_refused">
+          <div class="field" style="margin-top:10px;">
+            <label>Explique cuándo y por qué<br><span class="en">Explain when and why</span></label>
+            <textarea name="canada_refused_details"></textarea>
+          </div>
+        </div>
+
+        <div class="yn-row">
+          <div class="yn-question">¿Le ha sido negada una visa o entrada a algún otro país?<span class="en">Have you ever been refused a visa or entry to any other country?</span></div>
+          <div class="yn-btns">
+            <label><input type="radio" name="other_refused" value="No" required /> No</label>
+            <label><input type="radio" name="other_refused" value="Sí" /> Sí/Yes</label>
+          </div>
+        </div>
+        <div class="conditional" id="div_other_refused">
+          <div class="field" style="margin-top:10px;">
+            <label>País, año y motivo<br><span class="en">Country, year and reason</span></label>
+            <textarea name="other_refused_details"></textarea>
+          </div>
+        </div>
+
+        <hr class="divider" />
+        <div class="field">
+          <label>Países visitados en los últimos 10 años<br><span class="en">Countries visited in the last 10 years</span></label>
+          <textarea name="countries_visited" placeholder="País — Año — Propósito / Country — Year — Purpose (uno por línea / one per line)"></textarea>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ 8. PREGUNTAS DE ELEGIBILIDAD ════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="icon">🔒</span>
+        <h2>8. Preguntas de Elegibilidad y Antecedentes <small>/ Eligibility &amp; Background</small></h2>
+      </div>
+      <div class="section-body">
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:16px;">Responda todas las preguntas con honestidad. / Answer all questions honestly. A "Yes" does not automatically disqualify your application.</p>
+
+        <div class="yn-row">
+          <div class="yn-question">¿Ha sido arrestado, acusado o condenado por algún delito en cualquier país?<span class="en">Have you ever been arrested, charged, or convicted of any crime in any country?</span></div>
+          <div class="yn-btns">
+            <label><input type="radio" name="q_criminal" value="No" required /> No</label>
+            <label><input type="radio" name="q_criminal" value="Sí" /> Sí/Yes</label>
+          </div>
+        </div>
+
+        <div class="yn-row">
+          <div class="yn-question">¿Ha sido deportado, expulsado o removido de algún país?<span class="en">Have you ever been deported, expelled, or removed from any country?</span></div>
+          <div class="yn-btns">
+            <label><input type="radio" name="q_deported" value="No" required /> No</label>
+            <label><input type="radio" name="q_deported" value="Sí" /> Sí/Yes</label>
+          </div>
+        </div>
+
+        <div class="yn-row">
+          <div class="yn-question">¿Padece alguna condición médica, enfermedad crónica o mental que requiera atención médica?<span class="en">Do you have any medical, chronic, or mental health condition requiring medical attention?</span></div>
+          <div class="yn-btns">
+            <label><input type="radio" name="q_medical" value="No" required /> No</label>
+            <label><input type="radio" name="q_medical" value="Sí" /> Sí/Yes</label>
+          </div>
+        </div>
+
+        <div class="yn-row">
+          <div class="yn-question">¿Tiene familiares directos que sean ciudadanos o residentes permanentes de Canadá?<span class="en">Do you have immediate family members who are Canadian citizens or permanent residents?</span></div>
+          <div class="yn-btns">
+            <label><input type="radio" name="q_family_canada" value="No" required /> No</label>
+            <label><input type="radio" name="q_family_canada" value="Sí" /> Sí/Yes</label>
+          </div>
+        </div>
+
+        <div class="yn-row">
+          <div class="yn-question">¿Ha servido en las fuerzas armadas o policiales de algún país?<span class="en">Have you served in the military or police force of any country?</span></div>
+          <div class="yn-btns">
+            <label><input type="radio" name="q_military" value="No" required /> No</label>
+            <label><input type="radio" name="q_military" value="Sí" /> Sí/Yes</label>
+          </div>
+        </div>
+
+        <div class="yn-row">
+          <div class="yn-question">¿Ha estado asociado/a con algún grupo político, guerrillero, paramilitar o terrorista?<span class="en">Have you ever been associated with any political, guerrilla, paramilitary, or terrorist group?</span></div>
+          <div class="yn-btns">
+            <label><input type="radio" name="q_terrorist" value="No" required /> No</label>
+            <label><input type="radio" name="q_terrorist" value="Sí" /> Sí/Yes</label>
+          </div>
+        </div>
+
+        <div class="yn-row">
+          <div class="yn-question">¿Tiene intención de trabajar o estudiar en Canadá durante esta visita?<span class="en">Do you intend to work or study in Canada during this visit?</span></div>
+          <div class="yn-btns">
+            <label><input type="radio" name="q_work_study" value="No" required /> No</label>
+            <label><input type="radio" name="q_work_study" value="Sí" /> Sí/Yes</label>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;">
+          <div class="field">
+            <label>Si respondió "Sí" a alguna pregunta, proporcione detalles:<br><span class="en">If you answered "Yes" to any question, please provide details:</span></label>
+            <textarea name="q_explanations" placeholder="Indique la pregunta y proporcione todos los detalles / State the question and provide full details..."></textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ 9. DOCUMENTOS ═══════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="icon">📎</span>
+        <h2>9. Documentos a Entregar <small>/ Documents to Submit</small></h2>
+      </div>
+      <div class="section-body">
+        <p style="font-size:.83rem;color:var(--muted);margin-bottom:14px;">Marque los documentos que entregará. / Check the documents you will submit.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+          <label style="display:flex;align-items:flex-start;gap:9px;font-size:.84rem;padding:7px 0;border-bottom:1px solid var(--border);cursor:pointer;"><input type="checkbox" name="doc_passport_copy" value="Sí" style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;" /> Copia del pasaporte / Passport copy</label>
+          <label style="display:flex;align-items:flex-start;gap:9px;font-size:.84rem;padding:7px 0;border-bottom:1px solid var(--border);cursor:pointer;"><input type="checkbox" name="doc_photo" value="Sí" style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;" /> Foto tipo pasaporte / Passport photo</label>
+          <label style="display:flex;align-items:flex-start;gap:9px;font-size:.84rem;padding:7px 0;border-bottom:1px solid var(--border);cursor:pointer;"><input type="checkbox" name="doc_bank" value="Sí" style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;" /> Estados de cuenta (3–6 meses) / Bank statements</label>
+          <label style="display:flex;align-items:flex-start;gap:9px;font-size:.84rem;padding:7px 0;border-bottom:1px solid var(--border);cursor:pointer;"><input type="checkbox" name="doc_employment_letter" value="Sí" style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;" /> Carta de empleo / Employment letter</label>
+          <label style="display:flex;align-items:flex-start;gap:9px;font-size:.84rem;padding:7px 0;border-bottom:1px solid var(--border);cursor:pointer;"><input type="checkbox" name="doc_tax" value="Sí" style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;" /> Declaración de impuestos / Tax return</label>
+          <label style="display:flex;align-items:flex-start;gap:9px;font-size:.84rem;padding:7px 0;border-bottom:1px solid var(--border);cursor:pointer;"><input type="checkbox" name="doc_business" value="Sí" style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;" /> Documentos del negocio / Business docs</label>
+          <label style="display:flex;align-items:flex-start;gap:9px;font-size:.84rem;padding:7px 0;border-bottom:1px solid var(--border);cursor:pointer;"><input type="checkbox" name="doc_hotel" value="Sí" style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;" /> Reserva de hotel / Hotel reservation</label>
+          <label style="display:flex;align-items:flex-start;gap:9px;font-size:.84rem;padding:7px 0;border-bottom:1px solid var(--border);cursor:pointer;"><input type="checkbox" name="doc_flight" value="Sí" style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;" /> Itinerario de vuelo / Flight itinerary</label>
+          <label style="display:flex;align-items:flex-start;gap:9px;font-size:.84rem;padding:7px 0;border-bottom:1px solid var(--border);cursor:pointer;"><input type="checkbox" name="doc_invitation" value="Sí" style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;" /> Carta de invitación / Invitation letter</label>
+          <label style="display:flex;align-items:flex-start;gap:9px;font-size:.84rem;padding:7px 0;border-bottom:1px solid var(--border);cursor:pointer;"><input type="checkbox" name="doc_property" value="Sí" style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;" /> Doc. de propiedad (casa/carro) / Property docs</label>
+          <label style="display:flex;align-items:flex-start;gap:9px;font-size:.84rem;padding:7px 0;border-bottom:1px solid var(--border);cursor:pointer;"><input type="checkbox" name="doc_marriage" value="Sí" style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;" /> Acta de matrimonio / Marriage certificate</label>
+          <label style="display:flex;align-items:flex-start;gap:9px;font-size:.84rem;padding:7px 0;cursor:pointer;"><input type="checkbox" name="doc_biometrics" value="Sí" style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;" /> Biométricos previos / Previous biometrics</label>
+        </div>
+        <hr class="divider" />
+        <div class="field">
+          <label>Comentarios adicionales / Additional Comments</label>
+          <textarea name="comments" placeholder="Cualquier información adicional relevante / Any additional relevant information..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ FIRMA ═══════════════════════════════════════════ -->
+    <div class="signature-block">
+      <p><strong>Declaración y Autorización / Declaration and Authorization</strong></p>
+      <p>Declaro que la información proporcionada en este formulario es verdadera, completa y correcta. Entiendo que proporcionar información falsa o engañosa puede resultar en la denegación de mi solicitud de visa y futuras restricciones de viaje.</p>
+      <p><em>I declare that the information provided in this form is true, complete, and correct. I understand that providing false or misleading information may result in the denial of my visa application and future travel restrictions.</em></p>
+    </div>
+
+    <div class="grid-2">
+      <div class="field">
+        <label>Nombre completo (firma electrónica) <span class="req">*</span><br><span class="en">Full Name (electronic signature)</span></label>
+        <input type="text" name="signature_name" placeholder="Escriba su nombre completo" required />
+      </div>
+      <div class="field">
+        <label>Fecha <span class="req">*</span><br><span class="en">Date</span></label>
+        <input type="date" name="signature_date" id="sig_date" required />
+      </div>
+    </div>
+
+    <div class="confirm-check" style="margin-top:18px;">
+      <input type="checkbox" id="agree" name="agree" required />
+      <label for="agree">Confirmo que toda la información es correcta y autorizo a CCServices a procesar mi solicitud de Visa de Visitante a Canadá. / I confirm all information is accurate and authorize CCServices to process my Canada Visitor Visa application.</label>
+    </div>
+
+    <button type="submit" class="btn-submit" style="margin-top:22px;">
+      🍁 Enviar Solicitud / Submit Application
+    </button>
+
+  </form>
+
+  <!-- SUCCESS -->
+  <div id="success">
+    <div class="check-icon">✅</div>
+    <h2>¡Solicitud recibida! / Application Received!</h2>
+    <p>Gracias por su confianza. CCServices se pondrá en contacto con usted pronto para continuar con su trámite de Visa de Visitante a Canadá.</p>
+    <p><em>Thank you. CCServices will contact you shortly to continue your Canada Visitor Visa process.</em></p>
+  </div>
+
+  <div class="footer">
+    <span style="color:var(--cyan-dark);font-weight:700;">CCServices</span> &mdash; rceballos@ccservicesdo.com &mdash; Canada Visitor Visa Intake v1.0 &mdash; 2026
+  </div>
+
+</div><!-- /container -->
+
+<script>
+  // ── REEMPLAZA CON TU URL DE APPS SCRIPT ──────────────
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwqiaYy2FGBn0GffM1NXp8WAVLBCEuNzdRuCifetba6cv4yx-Hk2tCFvFWOLkDfmnBWjg/exec";
+  // ─────────────────────────────────────────────────────
+
+  // Fecha de hoy por defecto
+  document.getElementById('sig_date').valueAsDate = new Date();
+
+  // ── Condicionales ────────────────────────────────────
+  function watchSelect(selId, showVal, targetId){
+    const el = document.getElementById(selId);
+    if(!el) return;
+    el.addEventListener('change', function(){
+      const t = document.getElementById(targetId);
+      if(!t) return;
+      if(this.value === showVal){ t.style.display = 'flex'; t.style.flexDirection = 'column'; }
+      else { t.style.display = 'none'; }
+    });
+  }
+  function watchRadio(name, showVal, divId){
+    document.querySelectorAll(`[name="${name}"]`).forEach(r => {
+      r.addEventListener('change', function(){
+        const d = document.getElementById(divId);
+        if(!d) return;
+        d.classList.toggle('show', this.value === showVal);
+      });
+    });
+  }
+
+  // Nombre anterior
+  watchSelect('sel_other_name', 'Sí', 'field_other_name');
+  // Otra nacionalidad
+  watchSelect('sel_other_nat', 'Sí', 'field_other_nat');
+  // Estado civil → cónyuge
+  document.getElementById('sel_marital').addEventListener('change', function(){
+    const show = ['Casado/a','Unión libre'].includes(this.value);
+    document.getElementById('div_conyuge').classList.toggle('show', show);
+  });
+  // Hijos
+  document.getElementById('sel_children').addEventListener('change', function(){
+    const show = this.value === 'Sí';
+    document.getElementById('field_children').style.display = show ? 'flex' : 'none';
+    document.getElementById('div_children_detail').classList.toggle('show', show);
+  });
+  // Financiador
+  document.getElementById('sel_funder').addEventListener('change', function(){
+    const show = this.value !== 'Yo mismo/a' && this.value !== '';
+    document.getElementById('field_funder_name').style.display = show ? 'flex' : 'none';
+    if(show) document.getElementById('field_funder_name').style.flexDirection = 'column';
+  });
+
+  // Pasaporte perdido
+  watchRadio('passport_lost', 'Sí', 'div_passport_lost');
+  // Otro pasaporte
+  watchRadio('other_passport', 'Sí', 'div_other_passport');
+  // Empleo anterior
+  watchRadio('prev_employment', 'Sí', 'div_prev_emp');
+  // Canadá anterior
+  watchRadio('prev_canada', 'Sí', 'div_prev_canada');
+  // EE.UU.
+  watchRadio('prev_usa', 'Sí', 'div_prev_usa');
+  // Rechazado Canadá
+  watchRadio('canada_refused', 'Sí', 'div_canada_refused');
+  // Rechazado otro
+  watchRadio('other_refused', 'Sí', 'div_other_refused');
+
+  // ── Envío al Apps Script ─────────────────────────────
+  document.getElementById('visaForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+
+    const email = document.querySelector('[name="email"]').value;
+    const emailConfirm = document.querySelector('[name="email_confirm"]').value;
+    if(email !== emailConfirm){
+      alert('Los correos electrónicos no coinciden. / Email addresses do not match.');
+      return;
+    }
+    if(!document.getElementById('agree').checked){
+      alert('Debe aceptar la declaración para continuar. / You must accept the declaration to continue.');
+      return;
+    }
+
+    const btn = document.querySelector('.btn-submit');
+    btn.disabled = true;
+    btn.textContent = 'Enviando... / Sending...';
+
+    // Recopilar todos los campos
+    const fd = new FormData(this);
+    const payload = {};
+    fd.forEach((val, key) => { payload[key] = val; });
+    payload.fecha_envio = new Date().toLocaleString('es-DO');
+    payload.formulario  = 'Visa Visitante Canada';
+
+    // Documentos seleccionados
+    const docFields = [
+      'doc_passport_copy','doc_photo','doc_bank','doc_employment_letter',
+      'doc_tax','doc_business','doc_hotel','doc_flight',
+      'doc_invitation','doc_property','doc_marriage','doc_biometrics'
+    ];
+    const docs = docFields.filter(d => {
+      const el = document.querySelector(`[name="${d}"]`);
+      return el && el.checked;
+    }).map(d => d.replace('doc_',''));
+    payload.documentos = docs.join(', ') || 'Ninguno';
+
+    // Enviar a Google Sheets (no-cors GET)
+    const params = new URLSearchParams(payload);
+    fetch(WEB_APP_URL + '?' + params.toString(), {
+      method: 'GET',
+      mode: 'no-cors'
+    }).catch(() => {});
+
+    setTimeout(() => {
+      document.getElementById('visaForm').style.display = 'none';
+      document.getElementById('success').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 800);
+  });
+</script>
+</body>
+</html>
